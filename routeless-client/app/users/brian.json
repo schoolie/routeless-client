@@ -1,0 +1,64 @@
+{
+    "additionalFeatures": "Front Facing 1.3MP Camera", 
+    "android": {
+        "os": "Android 2.2", 
+        "ui": "Dell Stage"
+    }, 
+    "availability": [
+        "T-Mobile"
+    ], 
+    "battery": {
+        "standbyTime": "", 
+        "talkTime": "", 
+        "type": "Lithium Ion (Li-Ion) (2780 mAH)"
+    }, 
+    "camera": {
+        "features": [
+            "Flash", 
+            "Video"
+        ], 
+        "primary": "5.0 megapixels"
+    }, 
+    "connectivity": {
+        "bluetooth": "Bluetooth 2.1", 
+        "cell": "T-mobile HSPA+ @ 2100/1900/AWS/850 MHz", 
+        "gps": true, 
+        "infrared": false, 
+        "wifi": "802.11 b/g"
+    }, 
+    "description": "Brian is the guy writing this app...", 
+    "display": {
+        "screenResolution": "WVGA (800 x 480)", 
+        "screenSize": "7.0 inches", 
+        "touchScreen": true
+    }, 
+    "hardware": {
+        "accelerometer": true, 
+        "audioJack": "3.5mm", 
+        "cpu": "nVidia Tegra T20", 
+        "fmRadio": false, 
+        "physicalKeyboard": false, 
+        "usb": "USB 2.0"
+    }, 
+    "id": "brian", 
+    "images": [
+        "img/phones/dell-streak-7.0.jpg", 
+        "img/phones/dell-streak-7.1.jpg", 
+        "img/phones/dell-streak-7.2.jpg", 
+        "img/phones/dell-streak-7.3.jpg", 
+        "img/phones/dell-streak-7.4.jpg"
+    ], 
+    "name": "Brian Schoolcraft", 
+    "sizeAndWeight": {
+        "dimensions": [
+            "199.9 mm (w)", 
+            "119.8 mm (h)", 
+            "12.4 mm (d)"
+        ], 
+        "weight": "450.0 grams"
+    }, 
+    "storage": {
+        "flash": "16000MB", 
+        "ram": "512MB"
+    }
+}
