@@ -5,7 +5,6 @@
 var phonecatApp = angular.module('phonecatApp', [
   'ngRoute',
   'phonecatAnimations',
-
   'phonecatControllers',
   'phonecatFilters',
   'phonecatServices'
@@ -33,4 +32,8 @@ phonecatApp.config(['$routeProvider',
       otherwise({
         redirectTo: '/phones'
       });
-  }]);
+  }],
+  ['$resourceProvider', function($resourceProvider) {
+    // Don't strip trailing slashes from calculated URLs
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+}]);
