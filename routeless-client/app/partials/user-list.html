@@ -15,10 +15,10 @@
       <!--Body content-->
 
       <ul class="users">
-        <li ng-repeat="user in users | filter:query | orderBy:orderProp"
+        <li ng-repeat="user in users['list'] | filter:query | orderBy:orderProp"
             class="thumbnail user-listing">
-          <a href="#/users/{{user.id}}">{{user.name}}</a>
-          <p>{{user.snippet}}</p>
+          <a href="#/users/{{user.username}}">{{user.username}}</a>
+          <p>{{user.email}}</p>
         </li>
       </ul>
 

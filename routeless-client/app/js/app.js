@@ -25,12 +25,12 @@ phonecatApp.config(['$routeProvider',
         templateUrl: 'partials/phone-detail.html',
         controller: 'PhoneDetailCtrl'
       }).
-      when('/users/:userId', {
+      when('/users/:username', {
         templateUrl: 'partials/user-detail.html',
         controller: 'UserDetailCtrl'
       }).
       otherwise({
-        redirectTo: '/phones'
+        redirectTo: '/users'
       });
   }],
   ['$resourceProvider', function($resourceProvider) {

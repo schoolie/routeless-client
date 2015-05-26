@@ -13,7 +13,7 @@ phonecatServices.factory('Phone', ['$resource',
 
 phonecatServices.factory('User', ['$resource',
   function($resource){
-    return $resource('http://localhost:5000/test', {}, {
-      query: {method:'GET'}
+    return $resource('http://localhost:5000/api_1_0/users/:username', {username:''}, {
+      query: {method:'GET'},
     });
   }]);

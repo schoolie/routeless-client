@@ -18,7 +18,7 @@ phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Ph
 
     $scope.setImage = function(imageUrl) {
       $scope.mainImageUrl = imageUrl;
-    }
+    };
   }]);
 
 phonecatControllers.controller('UserListCtrl', ['$scope', 'User',
@@ -30,11 +30,6 @@ phonecatControllers.controller('UserListCtrl', ['$scope', 'User',
 
 phonecatControllers.controller('UserDetailCtrl', ['$scope', '$routeParams', 'User',
   function($scope, $routeParams, User) {
-    $scope.phone = User.get({userId: $routeParams.userId}, function(user) {
-      $scope.mainImageUrl = user.images[0]
+    $scope.user = User.get({username: $routeParams.username}, function(user) {
     });
-
-    $scope.setImage = function(imageUrl) {
-      $scope.mainImageUrl = imageUrl;
-    }
   }]);
