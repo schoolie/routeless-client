@@ -1,0 +1,14 @@
+<div ng-controller="CourseCreateCtrl" >
+    <form>
+        <input type="text" name="firstName" ng-model="courseForm.centerlat"> Center Latitude <br/>
+        <input type="text" name="lastName"  ng-model="courseForm.centerlon"> Center Longitude <br/>
+        <input type="text" name="lastName"  ng-model="courseForm.map_layer"> Map Layer <br/>
+        
+        <button ng-click="courseForm.submit()">Submit Form</button>
+
+    </form>
+
+    <div>
+        {{courseForm.centerlat}} {{courseForm.centerlon}} {{courseForm.map_layer}}
+    </div>
+</div>

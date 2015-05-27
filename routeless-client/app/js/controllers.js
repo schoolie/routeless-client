@@ -37,8 +37,7 @@ phonecatControllers.controller('UserDetailCtrl', ['$scope', '$routeParams', 'Use
 phonecatControllers.controller('CourseListCtrl', ['$scope', 'Course',
   function($scope, Course) {
     $scope.courses = Course.query();
-    $scope.orderProp = 'id';
-  }]);
+    $scope.orderProp = 'id';  }]);
   
 
 phonecatControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', 'Course',
@@ -46,3 +45,21 @@ phonecatControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', 'C
     $scope.course = Course.get({id: $routeParams.id}, function(course) {
     });
   }]);
+
+phonecatControllers.controller('CourseCreateCtrl', ['$scope', '$routeParams', 'Course',
+  function($scope, $routeParams, Course) {
+    $scope.courseForm = {};
+    $scope.courseForm.centerlat = 42.1;
+    $scope.courseForm.centerlon = 50.1;
+    $scope.courseForm.map_layer = 'satellite'; 
+    $scope.courseForm.submit = function(item, event) {
+       console.log("--> Submitting form");
+       var dataObject = {
+          center_lat: $scope.courseForm.centerlat,
+          center_lon: $scope.courseForm.centerlon,
+          map_layer: $scope.courseForm.map_layer
+       };
+       
+       Course.save({data: dataObject});
+   };
+}]);

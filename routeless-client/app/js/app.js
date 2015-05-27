@@ -33,6 +33,10 @@ phonecatApp.config(['$routeProvider',
         templateUrl: 'partials/user-detail.html',
         controller: 'UserDetailCtrl'
       }).
+      when('/new_course', {
+        templateUrl: 'partials/course-create.html',
+        controller: 'CourseCreateCtrl'
+      }).
       otherwise({
         redirectTo: '/users'
       });
