@@ -17,3 +17,10 @@ phonecatServices.factory('User', ['$resource',
       query: {method:'GET'},
     });
   }]);
+
+phonecatServices.factory('Course', ['$resource',
+  function($resource){
+    return $resource('http://localhost:5000/api_1_0/courses/:id', {id:''}, {
+      query: {method:'GET'},
+    });
+  }]);
