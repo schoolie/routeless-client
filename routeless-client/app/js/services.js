@@ -20,6 +20,8 @@ phonecatServices.factory('User', ['$resource',
 
 phonecatServices.factory('Course', ['$resource',
   function($resource){
-//    return $resource('http://localhost:5000/api_1_0/courses/:id', {id:''});
-    return $resource('http://localhost:5000/test/:id', {id:''});
+    return $resource('http://localhost:5000/api_1_0/courses/:id', {id:''}, {
+        query: {method:'GET', isArray:false}
+    });
+//    return $resource('http://localhost:5000/test/:id', {id:''});
   }]);

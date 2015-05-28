@@ -54,12 +54,12 @@ phonecatControllers.controller('CourseCreateCtrl', ['$scope', '$routeParams', 'C
     $scope.courseForm.map_layer = 'satellite'; 
     $scope.courseForm.submit = function(item, event) {
        console.log("--> Submitting form");
-       var dataObject = {
-          center_lat: $scope.courseForm.centerlat,
-          center_lon: $scope.courseForm.centerlon,
+       var data = {
+          centerlat: $scope.courseForm.centerlat,
+          centerlon: $scope.courseForm.centerlon,
           map_layer: $scope.courseForm.map_layer
        };
        
-       Course.save({data: dataObject});
+       Course.save(data);
    };
 }]);
