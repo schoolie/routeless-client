@@ -17,10 +17,10 @@
       <ul class="courses">
         <li ng-repeat="course in courses['objects'] | filter:query | orderBy:orderProp"
             class="thumbnail course-listing">
-          <a href="#/courses/{{course.id}}">{{course.id}}</a>
-          <p>{{course.centerlat}}</p>
-          <p>{{course.centerlon}}</p>
-          <p>{{course.map_layer}}</p>
+          <a href="#/courses/{{course.id}}">Course #{{course.id}}</a>
+          <p>Center Latitude: {{course.centerlat}}</p>
+          <p>Center Longitude: {{course.centerlon}}</p>
+          <p>Map Layer: {{course.map_layer}}</p>
         </li>
       </ul>
 

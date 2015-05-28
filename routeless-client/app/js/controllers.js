@@ -40,11 +40,22 @@ phonecatControllers.controller('CourseListCtrl', ['$scope', 'Course',
     $scope.orderProp = 'id';  }]);
   
 
-phonecatControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', 'Course',
-  function($scope, $routeParams, Course) {
+//phonecatControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', 'Course',
+//  function($scope, $routeParams, Course) {
+phonecatControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', 'Course', 'uiGmapGoogleMapApi',
+  function($scope, $routeParams, Course, uiGmapGoogleMapApi) {
     $scope.course = Course.get({id: $routeParams.id}, function(course) {
-    });
-  }]);
+    });   
+
+    
+//    uiGmapGoogleMapApi.then(function(maps) {
+//        console.log('initialized');    
+//        var center = {latitude: 42.1, longitude: 50.1};
+//
+//        $scope.map = { center: center, zoom: 8 };
+//        $scope.readyForMap = true;
+//    });
+}]);
 
 phonecatControllers.controller('CourseCreateCtrl', ['$scope', '$routeParams', 'Course',
   function($scope, $routeParams, Course) {

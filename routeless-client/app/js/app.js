@@ -7,7 +7,8 @@ var phonecatApp = angular.module('phonecatApp', [
   'phonecatAnimations',
   'phonecatControllers',
   'phonecatFilters',
-  'phonecatServices'
+  'phonecatServices',
+  'uiGmapgoogle-maps'
 ]);
 
 phonecatApp.config(['$routeProvider',
@@ -33,6 +34,10 @@ phonecatApp.config(['$routeProvider',
         templateUrl: 'partials/user-detail.html',
         controller: 'UserDetailCtrl'
       }).
+      when('/courses/:id', {
+        templateUrl: 'partials/course-detail.html',
+        controller: 'CourseDetailCtrl'
+      }).
       when('/new_course', {
         templateUrl: 'partials/course-create.html',
         controller: 'CourseCreateCtrl'
@@ -41,7 +46,15 @@ phonecatApp.config(['$routeProvider',
         redirectTo: '/users'
       });
   }],
-  ['$resourceProvider', function($resourceProvider) {
-    // Don't strip trailing slashes from calculated URLs
-    $resourceProvider.defaults.stripTrailingSlashes = false;
-}]);
+    ['$resourceProvider', function($resourceProvider) {
+        // Don't strip trailing slashes from calculated URLs
+        $resourceProvider.defaults.stripTrailingSlashes = false;
+    }],
+    ['uiGmapGoogleMapApiProvider', function(uiGmapGoogleMapApiProvider) {
+        uiGmapGoogleMapApiProvider.configure({
+            key: 'AIzaSyDP2M6kmO0ZJovCG0YufOy0XsK2HbdFm7w',
+            v: '3.17',
+            libraries: 'weather,geometry,visualization'
+        });
+    }]
+        );
