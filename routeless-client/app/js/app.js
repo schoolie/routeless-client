@@ -2,16 +2,16 @@
 
 /* App Module */
 
-var phonecatApp = angular.module('phonecatApp', [
+var routelessApp = angular.module('routelessApp', [
   'ngRoute',
-  'phonecatAnimations',
-  'phonecatControllers',
-  'phonecatFilters',
-  'phonecatServices',
-  'uiGmapgoogle-maps'
-]);
+  'routelessAnimations',
+  'routelessControllers',
+  'routelessFilters',
+  'routelessServices',
+  'routelessDirectives'
+  ]);
 
-phonecatApp.config(['$routeProvider',
+routelessApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/phones', {
@@ -49,12 +49,5 @@ phonecatApp.config(['$routeProvider',
     ['$resourceProvider', function($resourceProvider) {
         // Don't strip trailing slashes from calculated URLs
         $resourceProvider.defaults.stripTrailingSlashes = false;
-    }],
-    ['uiGmapGoogleMapApiProvider', function(uiGmapGoogleMapApiProvider) {
-        uiGmapGoogleMapApiProvider.configure({
-            key: 'AIzaSyDP2M6kmO0ZJovCG0YufOy0XsK2HbdFm7w',
-            v: '3.17',
-            libraries: 'weather,geometry,visualization'
-        });
     }]
         );

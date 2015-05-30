@@ -2,15 +2,15 @@
 
 /* Controllers */
 
-var phonecatControllers = angular.module('phonecatControllers', []);
+var routelessControllers = angular.module('routelessControllers', []);
 
-phonecatControllers.controller('PhoneListCtrl', ['$scope', 'Phone',
+routelessControllers.controller('PhoneListCtrl', ['$scope', 'Phone',
   function($scope, Phone) {
     $scope.phones = Phone.query();
     $scope.orderProp = 'age';
   }]);
 
-phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Phone',
+routelessControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Phone',
   function($scope, $routeParams, Phone) {
     $scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone) {
       $scope.mainImageUrl = phone.images[0];
@@ -21,43 +21,37 @@ phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Ph
     };
   }]);
 
-phonecatControllers.controller('UserListCtrl', ['$scope', 'User',
+routelessControllers.controller('UserListCtrl', ['$scope', 'User',
   function($scope, User) {
     $scope.users = User.query();
     $scope.orderProp = 'age';
   }]);
   
 
-phonecatControllers.controller('UserDetailCtrl', ['$scope', '$routeParams', 'User',
+routelessControllers.controller('UserDetailCtrl', ['$scope', '$routeParams', 'User',
   function($scope, $routeParams, User) {
     $scope.user = User.get({username: $routeParams.username}, function(user) {
     });
   }]);
 
-phonecatControllers.controller('CourseListCtrl', ['$scope', 'Course',
+routelessControllers.controller('CourseListCtrl', ['$scope', 'Course',
   function($scope, Course) {
     $scope.courses = Course.query();
     $scope.orderProp = 'id';  }]);
   
 
-//phonecatControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', 'Course',
-//  function($scope, $routeParams, Course) {
-phonecatControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', 'Course', 'uiGmapGoogleMapApi',
-  function($scope, $routeParams, Course, uiGmapGoogleMapApi) {
-    $scope.course = Course.get({id: $routeParams.id}, function(course) {
-    });   
-
-    
-//    uiGmapGoogleMapApi.then(function(maps) {
-//        console.log('initialized');    
-//        var center = {latitude: 42.1, longitude: 50.1};
-//
-//        $scope.map = { center: center, zoom: 8 };
-//        $scope.readyForMap = true;
-//    });
+routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', 'Course',
+  function($scope, $routeParams, Course) {
+    $scope.course = Course.query({id: $routeParams.id});   
+//    $scope.course = {
+//      centerlat: '42',
+//      centerlon: '-90',
+//      map_layer: 'topo'
+//    };
+    console.log($scope.course);
 }]);
 
-phonecatControllers.controller('CourseCreateCtrl', ['$scope', '$routeParams', 'Course',
+routelessControllers.controller('CourseCreateCtrl', ['$scope', '$routeParams', 'Course',
   function($scope, $routeParams, Course) {
     $scope.courseForm = {};
     $scope.courseForm.centerlat = 42.1;

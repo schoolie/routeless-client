@@ -2,23 +2,23 @@
 
 /* Services */
 
-var phonecatServices = angular.module('phonecatServices', ['ngResource']);
+var routelessServices = angular.module('routelessServices', ['ngResource']);
 
-phonecatServices.factory('Phone', ['$resource',
+routelessServices.factory('Phone', ['$resource',
   function($resource){
     return $resource('phones/:phoneId.json', {}, {
       query: {method:'GET', params:{phoneId:'phones'}, isArray:true}
     });
   }]);
 
-phonecatServices.factory('User', ['$resource',
+routelessServices.factory('User', ['$resource',
   function($resource){
     return $resource('http://localhost:5000/api_1_0/users/:username', {username:''}, {
       query: {method:'GET'},
     });
   }]);
 
-phonecatServices.factory('Course', ['$resource',
+routelessServices.factory('Course', ['$resource',
   function($resource){
     return $resource('http://localhost:5000/api_1_0/courses/:id', {id:''}, {
         query: {method:'GET', isArray:false}

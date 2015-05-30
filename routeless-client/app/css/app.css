@@ -4,7 +4,11 @@ body {
   padding-top: 20px;
 }
 
-.angular-google-map-container { height: 400px; }
+.google-map{
+  width:400px; 
+  height: 600px;
+  border: solid;
+}
 
 
 .phone-images {
