@@ -20,8 +20,9 @@ routelessServices.factory('User', ['$resource',
 
 routelessServices.factory('Course', ['$resource',
   function($resource){
-    return $resource('http://localhost:5000/api_1_0/courses/:id', {id:''}, {
-        query: {method:'GET', isArray:false}
+    return $resource('http://localhost:5000/api_1_0/courses/:id', {id:'@id'}, {
+        query: {method:'GET', isArray:false},
+        update: {method: 'PUT'}
     });
 //    return $resource('http://localhost:5000/test/:id', {id:''});
   }]);

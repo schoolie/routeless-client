@@ -3,5 +3,6 @@
     <p>Center Latitude: <input ng-model="course.centerlat"></p>
     <p>Center Longitude: <input ng-model="course.centerlon"></p>
     <p>Map Layer: {{course.map_layer}}</p>
+    <button ng-click="courseForm.submit()">Submit Form</button>
     <div class="google-map" rl-map="" latitude="{{course.centerlat}}" longitude="{{course.centerlon}}"></div>
 </div>

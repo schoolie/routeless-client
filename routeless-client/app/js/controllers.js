@@ -48,7 +48,16 @@ routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '
 //      centerlon: '-90',
 //      map_layer: 'topo'
 //    };
-    console.log($scope.course);
+    $scope.courseForm = {};
+    $scope.courseForm.submit = function(item, event) {
+      console.log("--> Submitting form");
+      var data = {
+         centerlat: $scope.course.centerlat,
+         centerlon: $scope.course.centerlon,
+         map_layer: $scope.course.map_layer
+      };
+      $scope.course.$update(function(){});
+    };
 }]);
 
 routelessControllers.controller('CourseCreateCtrl', ['$scope', '$routeParams', 'Course',
