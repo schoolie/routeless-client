@@ -1,8 +1,9 @@
 <div ng-controller="CourseDetailCtrl" >
     <p>Course #{{course.id}}</p>
-    <p>Center Latitude: <input ng-model="course.centerlat"></p>
-    <p>Center Longitude: <input ng-model="course.centerlon"></p>
+    <p>Center Latitude: {{course.centerlat}}</p>
+    <p>Center Longitude: {{course.centerlon}}</p>
     <p>Map Layer: {{course.map_layer}}</p>
-    <button ng-click="courseForm.submit()">Submit Form</button>
+    <p>Zoom: {{course.zoom}}</p>
+    <button ng-click="submit()">Submit Form</button>
     <div class="google-map" rl-map="" latitude="{{course.centerlat}}" longitude="{{course.centerlon}}"></div>
 </div>
