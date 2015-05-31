@@ -60,15 +60,18 @@ routelessDirectives.directive('rlMap', function () {
           latitude, 
           longitude,
           zoom,
+          mapType,
           map;
       
       scope.course.$promise.then(function(){
         latitude = parseFloat(scope.course.centerlat, 10) || 43.074688;
         longitude = parseFloat(scope.course.centerlon, 10) || -89.384294;
         zoom = parseFloat(scope.course.zoom, 10) || 8;
+        mapType = scope.course.map_layer || 'roadmap';
 
         mapOptions = {
             zoom: zoom,
+            mapTypeId: mapType,
             center: new google.maps.LatLng(latitude, longitude)
         };
 
@@ -82,11 +85,13 @@ routelessDirectives.directive('rlMap', function () {
               scope.course.centerlat = center.lat();
               scope.course.centerlon = center.lng();
               scope.course.zoom = map.getZoom();
+              scope.course.map_layer = map.getMapTypeId();
               if(!scope.$$phase) scope.$apply();
             };
           }
           google.maps.event.addListener(map, 'bounds_changed', centerChangedCallback(scope, map));
           google.maps.event.addListener(map, 'zoom_changed', centerChangedCallback(scope, map));
+          google.maps.event.addListener(map, 'maptypeid_changed', centerChangedCallback(scope, map));
       });
     }
   };
