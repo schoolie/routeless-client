@@ -32,30 +32,7 @@ routelessDirectives.directive('helloMaps', function() {
 routelessDirectives.directive('rlMap', function () {
   return {
     restrict: 'AEC',
-//    controller: function($scope) {         
-//      var map;
-//      
-//      this.registerMap = function (myMap) {
-//        var center = myMap.getCenter(),
-//          latitude = center.lat(),
-//          longitude = center.lng();
-//        map = myMap;
-//        $scope.course.centerlat = latitude;
-//        $scope.course.centerlon = longitude;
-//      };
-//      
-//      $scope.$watch('course.centerlat + course.centerlon', function (newValue, oldValue) {
-//        console.log('watched');
-//        if (newValue !== oldValue) { 
-//          var center = map.getCenter(),
-//            latitude = center.lat(),
-//            longitude = center.lng();
-//          if ($scope.course.centerlat !== latitude || $scope.course.centerlon !== longitude)
-//            map.setCenter(new google.maps.LatLng($scope.course.centerlat, $scope.course.centerlon));
-//        }
-//      });
-//    },
-    link: function (scope, elem, attrs, ctrl) {
+    link: function (scope, elem) {
       var mapOptions,
           latitude, 
           longitude,
@@ -66,18 +43,39 @@ routelessDirectives.directive('rlMap', function () {
       scope.course.$promise.then(function(){
         latitude = parseFloat(scope.course.centerlat, 10) || 43.074688;
         longitude = parseFloat(scope.course.centerlon, 10) || -89.384294;
-        zoom = parseFloat(scope.course.zoom, 10) || 8;
+        zoom = parseInt(scope.course.zoom) || 8;
         mapType = scope.course.map_layer || 'roadmap';
 
         mapOptions = {
             zoom: zoom,
             mapTypeId: mapType,
-            center: new google.maps.LatLng(latitude, longitude)
+            center: new google.maps.LatLng(latitude, longitude),
+            mapTypeControlOptions: {
+              mapTypeIds: [
+                "Topo", 
+                google.maps.MapTypeId.ROADMAP,
+                google.maps.MapTypeId.SATELLITE,
+                google.maps.MapTypeId.HYBRID,
+                google.maps.MapTypeId.TERRAIN
+              ],
+              mapTypeControlStyle: 'DROPDOWN_MENU'
+            }
         };
+        
+        var topoTypeOptions = {
+          getTileUrl: function (coord, zoom) {
+            return "http://s3-us-west-1.amazonaws.com/caltopo/topo/" + zoom + "/" + coord.x + "/" + coord.y + ".png?v=1";
+          },
+          tileSize: new google.maps.Size(256, 256),
+          maxZoom: 16,
+          minZoom: 8,
+          name: "Topo"
+        };
+        var topoMapType = new google.maps.ImageMapType(topoTypeOptions);  //Create Topo layer
 
         map = new google.maps.Map(elem[0], mapOptions);  
-
-  //      ctrl.registerMap(map);
+        
+        map.mapTypes.set('Topo', topoMapType); //Add topo button to map controls
 
         function centerChangedCallback (scope, map) {
           return function () {
