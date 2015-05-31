@@ -3,32 +3,6 @@
 /* Directives */
 var routelessDirectives = angular.module('routelessDirectives', []);
 
-routelessDirectives.directive('helloMaps', function() {
-  return function (scope, elem, attrs) {
-    var mapOptions,
-      latitude = attrs.latitude,
-      longitude = attrs.longitude,
-      map;
-      
-    console.log(attrs);
-    console.log(attrs.latitude);
-    console.log(longitude);
-    
-    latitude = latitude && parseFloat(latitude, 10) || 43.074688;
-    longitude = longitude && parseFloat(longitude, 10) || -89.384294;
-    
-    console.log(latitude);
-    console.log(longitude);
-    
-    mapOptions = {
-      zoom: 8,
-      center: new google.maps.LatLng(latitude, longitude)
-    };
-
-    map = new google.maps.Map(elem[0], mapOptions);
-  };
-});
-
 routelessDirectives.directive('rlMap', function () {
   return {
     restrict: 'AEC',
@@ -41,9 +15,9 @@ routelessDirectives.directive('rlMap', function () {
           map;
       
       scope.course.$promise.then(function(){
-        latitude = parseFloat(scope.course.centerlat, 10) || 43.074688;
-        longitude = parseFloat(scope.course.centerlon, 10) || -89.384294;
-        zoom = parseInt(scope.course.zoom) || 8;
+        latitude = parseFloat(scope.course.centerlat, 10) || 40.4279;
+        longitude = parseFloat(scope.course.centerlon, 10) || -86.9188;
+        zoom = parseInt(scope.course.zoom) || 14;
         mapType = scope.course.map_layer || 'roadmap';
 
         mapOptions = {
@@ -57,8 +31,7 @@ routelessDirectives.directive('rlMap', function () {
                 google.maps.MapTypeId.SATELLITE,
                 google.maps.MapTypeId.HYBRID,
                 google.maps.MapTypeId.TERRAIN
-              ],
-              mapTypeControlStyle: 'DROPDOWN_MENU'
+              ]
             }
         };
         
@@ -77,7 +50,32 @@ routelessDirectives.directive('rlMap', function () {
         
         map.mapTypes.set('Topo', topoMapType); //Add topo button to map controls
 
-        function centerChangedCallback (scope, map) {
+        var drawingManager = new google.maps.drawing.DrawingManager({    //Initialize Drawing Toolbar
+          //drawingMode: google.maps.drawing.OverlayType.MARKER,
+          drawingControl: true,
+          drawingControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_BOTTOM,
+            drawingModes: [
+              google.maps.drawing.OverlayType.MARKER,
+              google.maps.drawing.OverlayType.POLYGON,
+              google.maps.drawing.OverlayType.RECTANGLE
+            ]
+          },
+          markerOptions: {
+           // icon: blackIcon,    //Reference blackIcon created above
+           // draggable: true
+          }
+        });
+
+        drawingManager.setMap(map);
+
+        google.maps.event.addListener(drawingManager, 'markercomplete', function(marker){ 
+          console.log(marker.position);
+        });
+	
+
+
+        function mapChangedCallback (scope, map) {
           return function () {
               var center = map.getCenter();
               scope.course.centerlat = center.lat();
@@ -87,9 +85,9 @@ routelessDirectives.directive('rlMap', function () {
               if(!scope.$$phase) scope.$apply();
             };
           }
-          google.maps.event.addListener(map, 'bounds_changed', centerChangedCallback(scope, map));
-          google.maps.event.addListener(map, 'zoom_changed', centerChangedCallback(scope, map));
-          google.maps.event.addListener(map, 'maptypeid_changed', centerChangedCallback(scope, map));
+          google.maps.event.addListener(map, 'bounds_changed', mapChangedCallback(scope, map));
+          google.maps.event.addListener(map, 'zoom_changed', mapChangedCallback(scope, map));
+          google.maps.event.addListener(map, 'maptypeid_changed', mapChangedCallback(scope, map));
       });
     }
   };
