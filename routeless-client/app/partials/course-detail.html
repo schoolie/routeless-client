@@ -4,6 +4,8 @@
     <p>Center Longitude: {{course.centerlon}}</p>
     <p>Map Layer: {{course.map_layer}}</p>
     <p>Zoom: {{course.zoom}}</p>
+    <p>Marker Lat: <input ng-model="latitude"></input></p>
+    <p>Marker Lon: <input ng-model="longitude"></input></p>
     <button ng-click="submit()">Submit Form</button>
     <div class="google-map" rl-map=""></div>
 </div>

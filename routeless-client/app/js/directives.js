@@ -6,7 +6,33 @@ var routelessDirectives = angular.module('routelessDirectives', []);
 routelessDirectives.directive('rlMap', function () {
   return {
     restrict: 'AEC',
-    link: function (scope, elem) {
+    transclude: true,
+    controller: function($scope) {         
+      var marker;
+      
+      this.registerMarker = function (rlMarker) {
+        console.log(rlMarker);
+        var center = rlMarker.getPosition(),
+          latitude = center.lat(),
+          longitude = center.lng();
+        marker = rlMarker;
+        $scope.latitude = latitude;
+        $scope.longitude = longitude;
+        console.log($scope);
+        if(!$scope.$$phase) $scope.$apply();
+      };
+      
+      $scope.$watch('latitude + longitude', function (newValue, oldValue) {
+        if (newValue !== oldValue) { 
+          var center = marker.getPosition(),
+            latitude = center.lat(),
+            longitude = center.lng();
+          if ($scope.latitude !== latitude || $scope.longitude !== longitude)
+            marker.setPosition(new google.maps.LatLng($scope.latitude, $scope.longitude));
+        }
+      });
+    },
+    link: function (scope, elem, atrs, ctrl) {
       var mapOptions,
           latitude, 
           longitude,
@@ -63,7 +89,7 @@ routelessDirectives.directive('rlMap', function () {
           },
           markerOptions: {
            // icon: blackIcon,    //Reference blackIcon created above
-           // draggable: true
+            draggable: true
           }
         });
 
@@ -71,6 +97,7 @@ routelessDirectives.directive('rlMap', function () {
 
         google.maps.event.addListener(drawingManager, 'markercomplete', function(marker){ 
           console.log(marker.position);
+          ctrl.registerMarker(marker);
         });
 	
 
