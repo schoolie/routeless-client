@@ -26,3 +26,11 @@ routelessServices.factory('Course', ['$resource',
     });
 //    return $resource('http://localhost:5000/test/:id', {id:''});
   }]);
+
+routelessServices.factory('CheckPoint', ['$resource',
+  function($resource){
+    return $resource('http://localhost:5000/api_1_0/checkpoints/:id', {id:'@id'}, {
+        query: {method:'GET', isArray:false},
+        update: {method: 'PUT'}
+    });
+  }]);

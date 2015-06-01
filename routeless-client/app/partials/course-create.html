@@ -1,14 +1,17 @@
 <div ng-controller="CourseCreateCtrl" >
     <form>
-        <input type="text" name="firstName" ng-model="courseForm.centerlat"> Center Latitude <br/>
-        <input type="text" name="lastName"  ng-model="courseForm.centerlon"> Center Longitude <br/>
-        <input type="text" name="lastName"  ng-model="courseForm.map_layer"> Map Layer <br/>
+        <input type="text" name="firstName" ng-model="course.centerlat"> Center Latitude <br/>
+        <input type="text" name="lastName"  ng-model="course.centerlon"> Center Longitude <br/>
+        <input type="text" name="lastName"  ng-model="course.map_layer"> Map Layer <br/>
+        <input type="text" name="lastName"  ng-model="course.zoom"> Map Layer <br/>
         
-        <button ng-click="courseForm.submit()">Submit Form</button>
+        <button ng-click="course.$save()">Submit Form</button>
 
     </form>
 
     <div>
-        {{courseForm.centerlat}} {{courseForm.centerlon}} {{courseForm.map_layer}}
+        {{course.centerlat}} {{course.centerlon}} {{course.map_layer}} {{course.zoom}}
     </div>
+    <a href="/routeless-client/index.html#/courses">Course List</a>
+
 </div>

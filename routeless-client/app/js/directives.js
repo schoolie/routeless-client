@@ -39,7 +39,7 @@ routelessDirectives.directive('rlMap', function () {
           zoom,
           mapType,
           map;
-      
+  
       scope.course.$promise.then(function(){
         latitude = parseFloat(scope.course.centerlat, 10) || 40.4279;
         longitude = parseFloat(scope.course.centerlon, 10) || -86.9188;
@@ -52,7 +52,7 @@ routelessDirectives.directive('rlMap', function () {
             center: new google.maps.LatLng(latitude, longitude),
             mapTypeControlOptions: {
               mapTypeIds: [
-                "Topo", 
+                "topo", 
                 google.maps.MapTypeId.ROADMAP,
                 google.maps.MapTypeId.SATELLITE,
                 google.maps.MapTypeId.HYBRID,
@@ -74,7 +74,20 @@ routelessDirectives.directive('rlMap', function () {
 
         map = new google.maps.Map(elem[0], mapOptions);  
         
-        map.mapTypes.set('Topo', topoMapType); //Add topo button to map controls
+        map.mapTypes.set('topo', topoMapType); //Add topo button to map controls
+        
+        scope.course.check_points.forEach(function(cp){
+          var markerOptions,
+              marker;
+          markerOptions = {
+            position: new google.maps.LatLng(cp.lat, cp.lon),
+            map: map,
+            draggable: true
+          };          
+          marker = new google.maps.Marker(markerOptions);  
+//          cp.marker = marker;
+          console.log(scope);
+        });
 
         var drawingManager = new google.maps.drawing.DrawingManager({    //Initialize Drawing Toolbar
           //drawingMode: google.maps.drawing.OverlayType.MARKER,
@@ -88,16 +101,33 @@ routelessDirectives.directive('rlMap', function () {
             ]
           },
           markerOptions: {
-           // icon: blackIcon,    //Reference blackIcon created above
             draggable: true
           }
         });
-
         drawingManager.setMap(map);
+        
+        function markerChangedCallback (scope, marker) {
+          return function () {
+              var center = marker.getPosition();
+              scope.latitude = center.lat();
+              scope.longitude = center.lng();
+              if(!scope.$$phase) scope.$apply();
+            };
+          }
 
         google.maps.event.addListener(drawingManager, 'markercomplete', function(marker){ 
-          console.log(marker.position);
           ctrl.registerMarker(marker);
+          
+          var center = marker.getPosition();
+          var cp = {};
+          cp.lat = center.lat();
+          cp.lon = center.lng();
+//          cp.marker = marker;
+          
+          scope.course.check_points.push(cp);
+          console.log(scope.course.check_points);
+          
+          google.maps.event.addListener(marker, 'dragend', markerChangedCallback(scope, marker));
         });
 	
 
