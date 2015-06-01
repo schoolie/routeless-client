@@ -22,7 +22,20 @@ routelessServices.factory('Course', ['$resource',
   function($resource){
     return $resource('http://localhost:5000/api_1_0/courses/:id', {id:'@id'}, {
         query: {method:'GET', isArray:false},
-        update: {method: 'PUT'}
+        update: {
+          method: 'PUT',
+          transformRequest: function(data) {
+            console.log('before');
+            console.log(data);
+            var proc_data = data;
+            proc_data.check_points.forEach(function(cp){
+              delete cp.marker; //Strip gmaps marker object for passing to server
+            });
+            console.log('after');
+            console.log(proc_data);
+            return JSON.stringify(proc_data);
+          }
+        }
     });
 //    return $resource('http://localhost:5000/test/:id', {id:''});
   }]);
@@ -31,6 +44,6 @@ routelessServices.factory('CheckPoint', ['$resource',
   function($resource){
     return $resource('http://localhost:5000/api_1_0/checkpoints/:id', {id:'@id'}, {
         query: {method:'GET', isArray:false},
-        update: {method: 'PUT'}
+        update: {method: 'PUT'}  
     });
   }]);
