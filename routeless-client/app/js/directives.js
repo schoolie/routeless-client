@@ -8,29 +8,24 @@ routelessDirectives.directive('rlMap', function () {
     restrict: 'AEC',
     transclude: true,
     controller: function($scope) {         
-      var marker;
-      
-      this.registerMarker = function (rlMarker) {
-        console.log(rlMarker);
-        var center = rlMarker.getPosition(),
-          latitude = center.lat(),
-          longitude = center.lng();
-        marker = rlMarker;
-        $scope.latitude = latitude;
-        $scope.longitude = longitude;
-        console.log($scope);
-        if(!$scope.$$phase) $scope.$apply();
-      };
-      
-//      $scope.$watch('latitude + longitude', function (newValue, oldValue) {
-//        if (newValue !== oldValue) { 
-//          var center = marker.getPosition(),
-//            latitude = center.lat(),
-//            longitude = center.lng();
-//          if ($scope.latitude !== latitude || $scope.longitude !== longitude)
-//            marker.setPosition(new google.maps.LatLng($scope.latitude, $scope.longitude));
-//        }
-//      });
+//      var marker;
+//      
+//      this.registerCheckPoint = function (cp) {
+//        var center = cp.transient.marker.getPosition(),
+//          lat = center.lat(),
+//          lon = center.lng();
+//        console.log($scope);
+//        if(!$scope.$$phase) $scope.$apply();
+//        
+//        $scope.$watch(function(cp){
+//          return cp.title;
+//        }, function (newValue, oldValue) {
+//          if (newValue !== oldValue) { 
+//            console.log('change');
+//            cp.transient.infobox.content = cp.title;
+//          }
+//        });
+//      };
     },
     link: function (scope, elem, atrs, ctrl) {
       var mapOptions,
@@ -78,7 +73,7 @@ routelessDirectives.directive('rlMap', function () {
         
         function markerChangedCallback (scope, cp) {
           return function () {
-              var center = cp.marker.getPosition();
+              var center = cp.transient.marker.getPosition();
               cp.lat = center.lat();
               cp.lon = center.lng();
               if(!scope.$$phase) scope.$apply();
@@ -99,10 +94,16 @@ routelessDirectives.directive('rlMap', function () {
             draggable: true
           };          
           marker = new google.maps.Marker(markerOptions);  
-          cp.marker = marker;
-          console.log('marker scope');
-          console.log(scope);
-          console.log(marker);
+          cp.transient = {};
+          cp.transient.marker = marker;
+          
+          cp.transient.infobox = new InfoBox({
+            content: cp.title,
+            closeBoxURL: ""
+          });
+          
+          cp.transient.infobox.open(map, marker);
+          
           google.maps.event.addListener(marker, 'dragend', markerChangedCallback(scope, cp));
 
         });
@@ -126,17 +127,20 @@ routelessDirectives.directive('rlMap', function () {
         
 
         google.maps.event.addListener(drawingManager, 'markercomplete', function(marker){ 
-          ctrl.registerMarker(marker);
+//          ctrl.registerMarker(marker);
           
           var center = marker.getPosition();
-          var cp = {};
+          var cp = {
+            transient:{}
+          };
           cp.lat = center.lat();
           cp.lon = center.lng();
-          cp.marker = marker;
+          cp.transient.marker = marker;
           
           scope.course.check_points.push(cp);
-          console.log(scope.course.check_points);
           
+          if(!scope.$$phase) scope.$apply();
+
           google.maps.event.addListener(marker, 'dragend', markerChangedCallback(scope, cp));
         });
 	

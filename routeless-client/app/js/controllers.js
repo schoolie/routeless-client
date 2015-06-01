@@ -42,31 +42,34 @@ routelessControllers.controller('CourseListCtrl', ['$scope', 'Course',
 
 routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', 'Course', 'CheckPoint',
   function($scope, $routeParams, Course, CheckPoint) {
-    $scope.course = Course.query({id: $routeParams.id});   
-//    $scope.course = {
-//      centerlat: '42',
-//      centerlon: '-90',
-//      map_layer: 'topo'
-//    };
-    console.log($scope);
+    $scope.course = Course.query({id: $routeParams.id});
+    
     $scope.submit = function(item, event) {
       $scope.course.check_points.forEach(function(cp){
-        console.log(cp.id);
+        //if CP doesn't have an id, it was just created, so needs to be stored in db
         if (typeof cp.id === 'undefined') {
-        var check_point = new CheckPoint({
-          course_id: $scope.course.id,
-          lat: cp.lat,
-          lon: cp.lon
-        });
-        check_point.$save();
-        }  
+          var check_point = new CheckPoint({
+            course_id: $scope.course.id,
+            lat: cp.lat,
+            lon: cp.lon,
+            title: cp.title,
+            description: cp.description
+          });
+          check_point.$save();
+        }
       });
       
       $scope.course.$update(function(){
-        //sends PUT request to backend
+        //sends PUT request to backend, saving course and checkpoints
       });
     };
-}]);
+    
+    //Pass changes in title to infobox object
+    $scope.updateTitle = function(cp){
+      cp.transient.infobox.setContent(cp.title);
+    };
+
+  }]);
 
 routelessControllers.controller('CourseCreateCtrl', ['$scope', '$routeParams', '$location', 'Course',
   function($scope, $routeParams, $location, Course) {

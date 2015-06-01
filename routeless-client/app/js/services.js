@@ -25,14 +25,11 @@ routelessServices.factory('Course', ['$resource',
         update: {
           method: 'PUT',
           transformRequest: function(data) {
-            console.log('before');
-            console.log(data);
             var proc_data = data;
             proc_data.check_points.forEach(function(cp){
-              delete cp.marker; //Strip gmaps marker object for passing to server
+              delete cp.transient; //Strip gmaps marker object for passing to server
+              delete cp.$$hashKey; //Strip gmaps marker object for passing to server
             });
-            console.log('after');
-            console.log(proc_data);
             return JSON.stringify(proc_data);
           }
         }

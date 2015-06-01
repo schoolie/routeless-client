@@ -1,11 +1,24 @@
 <div ng-controller="CourseDetailCtrl" >
+  <a href="/routeless-client/index.html#/courses">Courses</a>
     <p>Course #{{course.id}}</p>
-    <p>Center Latitude: {{course.centerlat}}</p>
-    <p>Center Longitude: {{course.centerlon}}</p>
+<!--    <p>Center Latitude: {{course.centerlat}}</p>
+    <p>Center Longitude: {{course.centerlon}}</p>-->
     <p>Map Layer: {{course.map_layer}}</p>
-    <p>Zoom: {{course.zoom}}</p>
-    <p>Marker Lat: <input ng-model="latitude"></p>
-    <p>Marker Lon: <input ng-model="longitude"></p>
-    <button ng-click="submit()">Submit Form</button>
+    <!--<p>Zoom: {{course.zoom}}</p>-->
+    <button ng-click="submit()">Save Course</button>
+    <table>
+      <tr>
+        <th>Lat</th>
+        <th>Lon</th>
+        <th>Title</th>
+        <th>Description</th>
+      </tr>
+      <tr ng-repeat="cp in course.check_points">
+        <td>{{cp.lat | number}}</td>
+        <td>{{cp.lon | number}}</td>
+        <td><input ng-model="cp.title" ng-change="updateTitle(cp)"></td>
+        <td><input ng-model="cp.description"></td>
+      </tr>
+    </table>
     <div class="google-map" rl-map=""></div>
 </div>
