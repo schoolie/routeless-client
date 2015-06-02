@@ -6,27 +6,6 @@ var routelessDirectives = angular.module('routelessDirectives', []);
 routelessDirectives.directive('rlMap', function () {
   return {
     restrict: 'AEC',
-    transclude: true,
-    controller: function($scope) {         
-//      var marker;
-//      
-//      this.registerCheckPoint = function (cp) {
-//        var center = cp.transient.marker.getPosition(),
-//          lat = center.lat(),
-//          lon = center.lng();
-//        console.log($scope);
-//        if(!$scope.$$phase) $scope.$apply();
-//        
-//        $scope.$watch(function(cp){
-//          return cp.title;
-//        }, function (newValue, oldValue) {
-//          if (newValue !== oldValue) { 
-//            console.log('change');
-//            cp.transient.infobox.content = cp.title;
-//          }
-//        });
-//      };
-    },
     link: function (scope, elem, atrs, ctrl) {
       var mapOptions,
           latitude, 
@@ -55,6 +34,7 @@ routelessDirectives.directive('rlMap', function () {
               ]
             }
         };
+        map = new google.maps.Map(elem[0], mapOptions);  
         
         var topoTypeOptions = {
           getTileUrl: function (coord, zoom) {
@@ -66,9 +46,6 @@ routelessDirectives.directive('rlMap', function () {
           name: "Topo"
         };
         var topoMapType = new google.maps.ImageMapType(topoTypeOptions);  //Create Topo layer
-
-        map = new google.maps.Map(elem[0], mapOptions);  
-        
         map.mapTypes.set('topo', topoMapType); //Add topo button to map controls
         
         function markerChangedCallback (scope, cp) {
@@ -127,7 +104,6 @@ routelessDirectives.directive('rlMap', function () {
         
 
         google.maps.event.addListener(drawingManager, 'markercomplete', function(marker){ 
-//          ctrl.registerMarker(marker);
           
           var center = marker.getPosition();
           var cp = {
@@ -136,6 +112,13 @@ routelessDirectives.directive('rlMap', function () {
           cp.lat = center.lat();
           cp.lon = center.lng();
           cp.transient.marker = marker;
+          
+          cp.transient.infobox = new InfoBox({
+            content: cp.title,
+            closeBoxURL: ""
+          });
+          
+          cp.transient.infobox.open(map, marker);
           
           scope.course.check_points.push(cp);
           

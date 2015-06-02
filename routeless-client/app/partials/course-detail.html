@@ -1,4 +1,5 @@
-<div ng-controller="CourseDetailCtrl" >
+<!--<div ng-controller="CourseDetailCtrl" >-->
+<div>
   <a href="/routeless-client/index.html#/courses">Courses</a>
     <p>Course #{{course.id}}</p>
 <!--    <p>Center Latitude: {{course.centerlat}}</p>
@@ -12,12 +13,14 @@
         <th>Lon</th>
         <th>Title</th>
         <th>Description</th>
+        <th></th>
       </tr>
       <tr ng-repeat="cp in course.check_points">
         <td>{{cp.lat | number}}</td>
         <td>{{cp.lon | number}}</td>
         <td><input ng-model="cp.title" ng-change="updateTitle(cp)"></td>
         <td><input ng-model="cp.description"></td>
+        <td><button ng-click="deleteCP(cp)">Delete</button></td>
       </tr>
     </table>
     <div class="google-map" rl-map=""></div>

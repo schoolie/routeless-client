@@ -62,11 +62,26 @@ routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '
       $scope.course.$update(function(){
         //sends PUT request to backend, saving course and checkpoints
       });
+      console.log($scope.course.check_points);
+      $scope.course.$promise.then(function(){
+        console.log($scope.course.check_points);        
+      });
     };
     
     //Pass changes in title to infobox object
     $scope.updateTitle = function(cp){
       cp.transient.infobox.setContent(cp.title);
+    };
+    //Pass changes in title to infobox object
+    $scope.deleteCP = function(cp){
+      cp.transient.marker.setMap(null);
+//      CheckPoint.delete({id: cp.id});
+      var i = $scope.course.check_points.indexOf(cp);
+      if(i !== -1) {
+        $scope.course.check_points.splice(i, 1);
+      }
+//      var check_point = new CheckPoint(cp);
+//      check_point.$delete(function(){});
     };
 
   }]);
