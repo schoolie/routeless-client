@@ -21,30 +21,34 @@ routelessControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'P
     };
   }]);
 
-routelessControllers.controller('UserListCtrl', ['$scope', 'User',
-  function($scope, User) {
-    $scope.users = User.query();
-    $scope.orderProp = 'age';
-  }]);
-  
-
-routelessControllers.controller('UserDetailCtrl', ['$scope', '$routeParams', 'User',
-  function($scope, $routeParams, User) {
-    $scope.user = User.get({username: $routeParams.username}, function(user) {
-    });
-  }]);
-
 routelessControllers.controller('CourseListCtrl', ['$scope', 'Course',
   function($scope, Course) {
     $scope.courses = Course.query();
-    $scope.orderProp = 'id';  }]);
-  
+    $scope.orderProp = 'id';  
+  }]);
 
-routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', 'Course', 'CheckPoint',
-  function($scope, $routeParams, Course, CheckPoint) {
+routelessControllers.controller('UserListCtrl', ['$scope', 'User',
+  function($scope, User) {
+    $scope.users = User.query();
+    $scope.orderProp = 'id';  
+  }]);
+
+routelessControllers.controller('UserCreateCtrl', ['$scope', 'User',
+  function($scope, User) {
+    $scope.user = new User({username:'schoolie', email:'brian.p.schoolcraft@gmail.com'});
+    
+    $scope.submit = function() {
+      $scope.user.$save($scope.user, function(response) {
+        console.log(response);
+      });
+    };
+  }]);
+
+routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '$window', 'Course', 'CheckPoint',
+  function($scope, $routeParams, $window, Course, CheckPoint) {
     $scope.course = Course.query({id: $routeParams.id});
     
-    $scope.submit = function(item, event) {
+    $scope.submit = function() {
       $scope.course.check_points.forEach(function(cp){
         //if CP doesn't have an id, it was just created, so needs to be stored in db
         if (typeof cp.id === 'undefined') {
@@ -61,11 +65,9 @@ routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '
       
       $scope.course.$update(function(){
         //sends PUT request to backend, saving course and checkpoints
-      });
-      console.log($scope.course.check_points);
-      $scope.course.$promise.then(function(){
-        console.log($scope.course.check_points);        
-      });
+      }).then(function() {
+        $window.location.reload(); //Refresh page to get transient data rebuilt
+      });   
     };
     
     //Pass changes in title to infobox object
@@ -75,6 +77,7 @@ routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '
     //Pass changes in title to infobox object
     $scope.deleteCP = function(cp){
       cp.transient.marker.setMap(null);
+      cp.transient.infobox.close();
 //      CheckPoint.delete({id: cp.id});
       var i = $scope.course.check_points.indexOf(cp);
       if(i !== -1) {
