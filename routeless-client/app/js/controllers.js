@@ -47,7 +47,19 @@ routelessControllers.controller('UserCreateCtrl', ['$scope', 'User',
 routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '$window', 'Course', 'CheckPoint',
   function($scope, $routeParams, $window, Course, CheckPoint) {
     $scope.course = Course.query({id: $routeParams.id});
+    angular.extend($scope, {center: {
+        lat: 40.4279,
+        lng: -86.9188,
+        zoom: 14
+      }     
+    });
+    $scope.course.$promise.then(function(scope){
+      console.log(scope);
+      $scope.center = $scope.course;
+    });
     
+    console.log($scope.center);
+    console.log($scope.course);
     $scope.submit = function() {
       $scope.course.check_points.forEach(function(cp){
         //if CP doesn't have an id, it was just created, so needs to be stored in db
@@ -62,7 +74,6 @@ routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '
           check_point.$save();
         }
       });
-      
       $scope.course.$update(function(){
         //sends PUT request to backend, saving course and checkpoints
       }).then(function() {
@@ -91,5 +102,5 @@ routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '
 
 routelessControllers.controller('CourseCreateCtrl', ['$scope', '$routeParams', '$location', 'Course',
   function($scope, $routeParams, $location, Course) {
-    $scope.course = new Course({centerlat: 40, centerlon:-86, zoom:10, map_layer:'roadmap'});
+    $scope.course = new Course({lat: 40, lng: -86, zoom:10, map_layer:'roadmap'});
   }]);

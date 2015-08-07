@@ -1,7 +1,7 @@
 <div>
     <form>
-        <input type="text" name="firstName" ng-model="course.centerlat"> Center Latitude <br/>
-        <input type="text" name="lastName"  ng-model="course.centerlon"> Center Longitude <br/>
+        <input type="text" name="firstName" ng-model="course.lat"> Center Latitude <br/>
+        <input type="text" name="lastName"  ng-model="course.lng"> Center Longitude <br/>
         <input type="text" name="lastName"  ng-model="course.map_layer"> Map Layer <br/>
         <input type="text" name="lastName"  ng-model="course.zoom"> Map Layer <br/>
         
@@ -10,7 +10,7 @@
     </form>
 
     <div>
-        {{course.centerlat}} {{course.centerlon}} {{course.map_layer}} {{course.zoom}}
+        {{course.lat}} {{course.lng}} {{course.map_layer}} {{course.zoom}}
     </div>
     <a href="/routeless-client/index.html#/courses">Course List</a>
 

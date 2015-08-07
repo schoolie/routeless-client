@@ -1,5 +1,6 @@
 <!--<div ng-controller="CourseDetailCtrl" >-->
 <div>
+  <leaflet width="100%" height="480px" center="center"></leaflet>
   <a href="/routeless-client/index.html#/courses">Courses</a>
     <p>Course #{{course.id}}</p>
 <!--    <p>Center Latitude: {{course.centerlat}}</p>
@@ -23,5 +24,9 @@
         <td><button ng-click="deleteCP(cp)">Delete</button></td>
       </tr>
     </table>
+    <input ng-model="course.lat">
+    <input ng-model="course.lng">
+    <input ng-model="course.centerlat">
+    <input ng-model="course.centerlon">
     <div class="google-map" rl-map=""></div>
 </div>

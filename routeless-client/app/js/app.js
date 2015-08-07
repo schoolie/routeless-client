@@ -8,7 +8,8 @@ var routelessApp = angular.module('routelessApp', [
   'routelessControllers',
   'routelessFilters',
   'routelessServices',
-  'routelessDirectives'
+  'routelessDirectives',
+  'leaflet-directive'
   ]);
 
 routelessApp.config(['$routeProvider',
