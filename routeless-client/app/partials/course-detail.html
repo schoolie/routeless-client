@@ -1,13 +1,13 @@
 <!--<div ng-controller="CourseDetailCtrl" >-->
 <div>
-  <leaflet width="100%" height="480px" center="center"></leaflet>
   <a href="/routeless-client/index.html#/courses">Courses</a>
     <p>Course #{{course.id}}</p>
 <!--    <p>Center Latitude: {{course.centerlat}}</p>
-    <p>Center Longitude: {{course.centerlon}}</p>-->
+    <p>Center Longitude: {{course.centerlng}}</p>-->
     <p>Map Layer: {{course.map_layer}}</p>
     <!--<p>Zoom: {{course.zoom}}</p>-->
     <button ng-click="submit()">Save Course</button>
+    <button ng-click="add_check_point()">New Checkpoint</button>
     <table>
       <tr>
         <th>Lat</th>
@@ -18,15 +18,14 @@
       </tr>
       <tr ng-repeat="cp in course.check_points">
         <td>{{cp.lat | number}}</td>
-        <td>{{cp.lon | number}}</td>
-        <td><input ng-model="cp.title" ng-change="updateTitle(cp)"></td>
-        <td><input ng-model="cp.description"></td>
+        <td>{{cp.lng | number}}</td>
+        <td><input ng-model="cp.title"></td>
+        <td><input ng-model="cp.message"></td>
         <td><button ng-click="deleteCP(cp)">Delete</button></td>
       </tr>
     </table>
     <input ng-model="course.lat">
     <input ng-model="course.lng">
-    <input ng-model="course.centerlat">
-    <input ng-model="course.centerlon">
-    <div class="google-map" rl-map=""></div>
+    <leaflet width="100%" height="480px" center="course" markers="course.check_points" event-broadcast="events"></leaflet>
+    <!--<div class="google-map" rl-map=""></div>-->
 </div>

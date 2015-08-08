@@ -16,7 +16,7 @@ routelessDirectives.directive('rlMap', function () {
   
       scope.course.$promise.then(function(){
         latitude = parseFloat(scope.course.centerlat, 10) || 40.4279;
-        longitude = parseFloat(scope.course.centerlon, 10) || -86.9188;
+        longitude = parseFloat(scope.course.centerlng, 10) || -86.9188;
         zoom = parseInt(scope.course.zoom) || 14;
         mapType = scope.course.map_layer || 'roadmap';
 
@@ -52,7 +52,7 @@ routelessDirectives.directive('rlMap', function () {
           return function () {
               var center = cp.transient.marker.getPosition();
               cp.lat = center.lat();
-              cp.lon = center.lng();
+              cp.lng = center.lng();
               if(!scope.$$phase) scope.$apply();
               console.log('dragend');
               console.log(scope);
@@ -64,9 +64,9 @@ routelessDirectives.directive('rlMap', function () {
               marker;
               
           var lat = cp.lat;
-          var lon = cp.lon;
+          var lng = cp.lng;
           markerOptions = {
-            position: new google.maps.LatLng(lat, lon),
+            position: new google.maps.LatLng(lat, lng),
             map: map,
             draggable: true
           };          
@@ -110,7 +110,7 @@ routelessDirectives.directive('rlMap', function () {
             transient:{}
           };
           cp.lat = center.lat();
-          cp.lon = center.lng();
+          cp.lng = center.lng();
           cp.transient.marker = marker;
           
           cp.transient.infobox = new InfoBox({
@@ -133,7 +133,7 @@ routelessDirectives.directive('rlMap', function () {
           return function () {
               var center = map.getCenter();
               scope.course.centerlat = center.lat();
-              scope.course.centerlon = center.lng();
+              scope.course.centerlng = center.lng();
               scope.course.zoom = map.getZoom();
               scope.course.map_layer = map.getMapTypeId();
               if(!scope.$$phase) scope.$apply();

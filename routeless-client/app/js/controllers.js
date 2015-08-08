@@ -47,16 +47,28 @@ routelessControllers.controller('UserCreateCtrl', ['$scope', 'User',
 routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '$window', 'Course', 'CheckPoint',
   function($scope, $routeParams, $window, Course, CheckPoint) {
     $scope.course = Course.query({id: $routeParams.id});
-    angular.extend($scope, {center: {
-        lat: 40.4279,
-        lng: -86.9188,
-        zoom: 14
-      }     
+    
+    angular.extend($scope, {events: {}});
+    
+    $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+      for (var i=0; i < $scope.course.check_points.length; i++) {
+        if (args.model.id === $scope.course.check_points[i].id){
+          var idx = i;
+        }
+      }
+      var cp = $scope.course.check_points[idx];
+      console.log(cp);
+      cp.lat = args.model.lat;
+      cp.lng = args.model.lng;
     });
-    $scope.course.$promise.then(function(scope){
-      console.log(scope);
-      $scope.center = $scope.course;
-    });
+    
+    $scope.add_check_point = function() {
+      $scope.course.check_points.push({
+        lat: $scope.course.lat,
+        lng: $scope.course.lng,
+        draggable: true
+      });
+    };
     
     console.log($scope.center);
     console.log($scope.course);
@@ -67,7 +79,7 @@ routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '
           var check_point = new CheckPoint({
             course_id: $scope.course.id,
             lat: cp.lat,
-            lon: cp.lon,
+            lng: cp.lng,
             title: cp.title,
             description: cp.description
           });
@@ -77,19 +89,12 @@ routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '
       $scope.course.$update(function(){
         //sends PUT request to backend, saving course and checkpoints
       }).then(function() {
-        $window.location.reload(); //Refresh page to get transient data rebuilt
+//        $window.location.reload(); //Refresh page to get transient data rebuilt
       });   
     };
     
     //Pass changes in title to infobox object
-    $scope.updateTitle = function(cp){
-      cp.transient.infobox.setContent(cp.title);
-    };
-    //Pass changes in title to infobox object
     $scope.deleteCP = function(cp){
-      cp.transient.marker.setMap(null);
-      cp.transient.infobox.close();
-//      CheckPoint.delete({id: cp.id});
       var i = $scope.course.check_points.indexOf(cp);
       if(i !== -1) {
         $scope.course.check_points.splice(i, 1);

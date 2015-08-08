@@ -21,9 +21,13 @@ routelessServices.factory('Course', ['$resource',
             data = JSON.parse(data);
             data.lat = parseFloat(data.lat, 10) || 40.4279;
             data.lng = parseFloat(data.lng, 10) || -86.9188;
-            data.centerlat = data.lat;
-            data.centerlon = data.lng;
             data.zoom = parseInt(data.zoom) || 14;
+            
+            if('check_points' in data){
+              data.check_points.forEach(function(cp){
+                cp.draggable = true;
+              });
+            }
             return data;
           }
           
@@ -32,10 +36,9 @@ routelessServices.factory('Course', ['$resource',
           method: 'PUT',
           transformRequest: function(data) {
             var proc_data = data;
-            delete proc_data.centerlat;
-            delete proc_data.centerlon;
             delete proc_data.autoDiscover;
             proc_data.check_points.forEach(function(cp){
+              delete cp.draggable;
               delete cp.transient; //Strip transient gmaps data for passing to server
               delete cp.$$hashKey; //Strip for passing to server
             });
