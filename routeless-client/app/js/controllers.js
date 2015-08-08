@@ -48,7 +48,27 @@ routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '
   function($scope, $routeParams, $window, Course, CheckPoint) {
     $scope.course = Course.query({id: $routeParams.id});
     
-    angular.extend($scope, {events: {}});
+    angular.extend($scope, {events: {},
+      layers: {
+        baselayers: {
+            googleTerrain: {
+                name: 'Google Terrain',
+                layerType: 'TERRAIN',
+                type: 'google'
+            },
+            googleHybrid: {
+                    name: 'Google Hybrid',
+                    layerType: 'HYBRID',
+                    type: 'google'
+                },
+            googleRoadmap: {
+                name: 'Google Streets',
+                layerType: 'ROADMAP',
+                type: 'google'
+            }
+        }
+        }
+      });
     
     $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
       for (var i=0; i < $scope.course.check_points.length; i++) {
