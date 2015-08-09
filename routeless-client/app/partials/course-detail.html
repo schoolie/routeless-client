@@ -5,6 +5,11 @@
 <!--    <p>Center Latitude: {{course.centerlat}}</p>
     <p>Center Longitude: {{course.centerlng}}</p>-->
     <p>Map Layer: {{course.map_layer}}</p>
+    <select ng-model="course.map_layer">
+      <option value="osm">OpenStreetMap</option>
+      <option value="googleHybrid">Google Hybrid</option>
+      <option value="googleTerrain">Google Terrain</option>
+    </select>
     <!--<p>Zoom: {{course.zoom}}</p>-->
     <button ng-click="submit()">Save Course</button>
     <button ng-click="add_check_point()">New Checkpoint</button>

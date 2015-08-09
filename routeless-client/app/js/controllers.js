@@ -44,8 +44,8 @@ routelessControllers.controller('UserCreateCtrl', ['$scope', 'User',
     };
   }]);
 
-routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '$window', 'Course', 'CheckPoint',
-  function($scope, $routeParams, $window, Course, CheckPoint) {
+routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '$window', 'Course', 'CheckPoint', 'leafletData',
+  function($scope, $routeParams, $window, Course, CheckPoint, leafletData) {
     $scope.course = Course.query({id: $routeParams.id});
     
     angular.extend($scope, {events: {},
@@ -65,6 +65,16 @@ routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '
                 name: 'Google Streets',
                 layerType: 'ROADMAP',
                 type: 'google'
+            },
+            osm: {
+              name: 'OpenStreetMap',
+              url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              type: 'xyz'
+            },
+            caltopo: {
+              name: 'CalTopo',
+              url: "http://s3-us-west-1.amazonaws.com/caltopo/topo/{z}/{x}/{y}.png?v=1",
+              type: 'xyz'
             }
         }
         }
@@ -81,6 +91,33 @@ routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '
       cp.lat = args.model.lat;
       cp.lng = args.model.lng;
     });
+    
+    $scope.$on("leafletDirectiveMap.baselayerchange", function(event, args){
+      console.log(args.leafletEvent.name);
+      $scope.course.map_layer = args.leafletEvent.name;
+    });
+    
+//    $scope.$watch("course.map_layer", function(new_layer, old_layer) {
+//      $scope.changeBaseLayer(new_layer);
+//    });
+//    
+//    $scope.changeBaseLayer = function (new_layer) {
+//        leafletData.getMap().then(function (map) {
+//            leafletData.getLayers().then(function (layers) {
+//              for (var layer in layers.baselayers) {  
+//                if (layers.baselayers.hasOwnProperty(layer)) {
+//                  console.log('rem');
+//                  console.log(layer);
+//                  debugger;
+//                  map.removeLayer(layer);
+//                }
+//              }      
+//              console.log('new layer');
+//              console.log(new_layer);
+//              map.addLayer(layers.baselayers[new_layer]);
+//            });
+//        });
+//    };
     
     $scope.add_check_point = function() {
       $scope.course.check_points.push({
