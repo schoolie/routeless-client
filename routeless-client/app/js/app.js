@@ -35,6 +35,10 @@ routeless.config(['$routeProvider',
         templateUrl: 'partials/user-create.html',
         controller: 'UserCreateCtrl'
       }).
+      when('/users/:id', {
+        templateUrl: 'partials/user-detail.html',
+        controller: 'UserDetailCtrl'
+      }).
       otherwise({
         redirectTo: '/courses'
       });
