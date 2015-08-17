@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var routelessApp = angular.module('routelessApp', [
+var routeless = angular.module('routeless', [
   'ngRoute',
   'routelessAnimations',
   'routelessControllers',
@@ -12,7 +12,7 @@ var routelessApp = angular.module('routelessApp', [
   'leaflet-directive'
   ]);
 
-routelessApp.config(['$routeProvider',
+routeless.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/courses', {

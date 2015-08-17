@@ -1,3 +1,3 @@
 angular.module('routeless').constant('rlConfig', {
-  backend: 'http://localhost:5000/'
+  backend: 'http://brianschoolcraft.com:5000/'
 });
