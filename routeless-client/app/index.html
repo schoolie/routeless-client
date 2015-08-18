@@ -26,11 +26,13 @@
   <script src="js/animations.js"></script>
   <script src="js/controllers/MainCtrl.js"></script>
   <script src="js/controllers/CourseDetailCtrl.js"></script>
+  <script src="js/controllers/UserListCtrl.js"></script>
   <script src="js/controllers/NavbarCtrl.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
-  <script src="js/services/main.js"></script>
-  <script src="js/services/course.js"></script>
+  <script src="js/services/MainService.js"></script>
+  <script src="js/services/CourseService.js"></script>
+  <script src="js/services/AuthService.js"></script>
   
   <!-- Select the appropriate configuration -->
   
@@ -52,6 +54,7 @@
         </ul>
 
         <ul class="nav pull-right">
+          <li ng-class="{active: false}"><a href="#/users/{{currentUser.id}}">{{currentUser.username}}</a></li>
           <li ng-class="{active: routeIs('/help')}"><a href="#/help">Help</a></li>
         </ul>
       </div>

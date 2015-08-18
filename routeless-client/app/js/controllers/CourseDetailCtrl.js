@@ -2,7 +2,13 @@
 
 /* Controller for course detail/edit page */
 
-routelessControllers.controller('CourseDetailCtrl', ['$scope', '$routeParams', '$window', 'Course', 'CheckPoint', 'leafletData',
+routelessControllers.controller('CourseDetailCtrl', 
+  ['$scope', 
+   '$routeParams', 
+   '$window', 
+   'Course', 
+   'CheckPoint', 
+   'leafletData',
   function($scope, $routeParams, $window, Course, CheckPoint, leafletData) {
     $scope.course = Course.query({id: $routeParams.id});
     

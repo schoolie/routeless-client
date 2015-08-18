@@ -27,12 +27,6 @@ routelessControllers.controller('CourseListCtrl', ['$scope', 'Course',
     $scope.orderProp = 'id';  
   }]);
 
-routelessControllers.controller('UserListCtrl', ['$scope', 'User',
-  function($scope, User) {
-    $scope.users = User.query();
-    $scope.orderProp = 'id';  
-  }]);
-
 routelessControllers.controller('UserDetailCtrl', ['$scope', '$routeParams', 'User',
   function($scope, $routeParams, User) {
     $scope.user = User.query({id: $routeParams.id});
