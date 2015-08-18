@@ -42,8 +42,3 @@ routelessControllers.controller('UserCreateCtrl', ['$scope', 'User',
       });
     };
   }]);
-
-routelessControllers.controller('CourseCreateCtrl', ['$scope', '$routeParams', '$location', 'Course',
-  function($scope, $routeParams, $location, Course) {
-    $scope.course = new Course({lat: 40, lng: -86, zoom:10, map_layer:'roadmap'});
-  }]);
