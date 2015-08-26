@@ -39,7 +39,10 @@ routelessServices.factory('AuthService',
            },
            signin: function (data, success, error) {
 //               $http.post(urls.BASE + '/signin', data).success(success).error(error)
-               success({token: {user:'schoolie'}});
+               console.log(data);
+               res = {token: {user: data.user}};
+               $localStorage.token = res.token;
+               success(res);
            },
            logout: function (success) {
                tokenClaims = {};
@@ -47,7 +50,7 @@ routelessServices.factory('AuthService',
                success();
            },
            getTokenClaims: function () {
-               return tokenClaims;
+               return getClaimsFromToken();
            }
        };
    }]);

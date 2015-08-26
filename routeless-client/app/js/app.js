@@ -20,6 +20,10 @@ routeless.config(['$routeProvider',
         templateUrl: 'partials/splash.html',
         controller: 'SplashCtrl'
       }).
+      when('/login', {
+        templateUrl: 'partials/login.html',
+        controller: 'LoginCtrl'
+      }).
       when('/courses', {
         templateUrl: 'partials/course-list.html',
         controller: 'CourseListCtrl'
@@ -47,5 +51,4 @@ routeless.config(['$routeProvider',
       otherwise({
         redirectTo: '/courses'
       });
-  }]
-        );
+  }]);

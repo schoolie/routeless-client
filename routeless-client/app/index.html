@@ -30,6 +30,7 @@
   <script src="js/controllers/CourseCreateCtrl.js"></script>
   <script src="js/controllers/UserListCtrl.js"></script>
   <script src="js/controllers/NavbarCtrl.js"></script>
+  <script src="js/controllers/LoginCtrl.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
   <script src="js/services/MainService.js"></script>
@@ -43,11 +44,11 @@
   <script src="js/configs/serverDev.js"></script>
   
 </head>
-<body>
+<body ng-controller="NavbarCtrl">
   
-  <div class="container">
+  <div class="container" style="width:100%">
 
-    <div class="navbar" ng-controller="NavbarCtrl">
+    <div class="navbar">
       <div class="navbar-inner">
         <a class="brand" href="#/">Routeless</a>
         <ul class="nav">
@@ -62,20 +63,21 @@
           
           
            <li data-ng-show="token"><a ng-href="#/restricted">Restricted area</a></li>
-           <li data-ng-hide="token"><a ng-click="signin()">Sign in</a></li>
+           <li data-ng-hide="token" ng-class="{active: routeIs('/login')}"><a ng-href="#/login">Log in</a></li>
            <li data-ng-hide="token"><a ng-click="signup()">Sign up</a></li>
            <li data-ng-show="token"><a ng-click="logout()">Logout</a></li>
-           <li><p>{{tokenClaims}}</p></li>
+           <li><p>{{token}}</p><p>{{authUser.username}}</p></li>
         </ul>
           
     
       </div>
     </div>
+    
+    <div class="view-container">
+      <div ng-view class="view-frame"></div>
+    </div>
+
   </div>
   
-  <div class="view-container">
-    <div ng-view class="view-frame"></div>
-  </div>
-
 </body>
 </html>

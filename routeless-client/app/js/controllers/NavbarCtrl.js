@@ -5,7 +5,7 @@ routelessControllers.controller('NavbarCtrl',
   '$location',
   '$localStorage',
   'AuthService',
-  function NavbarController($scope, $location, $localStorage, Auth) {
+  function NavbarController($scope, $location, $localStorage, AuthService) {
 
     $scope.routeIs = function(routeName) {
       return $location.path() === routeName;
@@ -14,21 +14,8 @@ routelessControllers.controller('NavbarCtrl',
 
     function successAuth(res) {
       $localStorage.token = res.token;
-      console.log($localStorage);
-      console.log($scope.token);
       window.location = "#/courses";
     }
-
-    $scope.signin = function() {
-      var formData = {
-        email: $scope.email,
-        password: $scope.password
-      };
-
-      Auth.signin(formData, successAuth, function() {
-        $rootScope.error = 'Invalid credentials.';
-      });
-    };
 
     $scope.signup = function() {
       var formData = {
@@ -36,17 +23,24 @@ routelessControllers.controller('NavbarCtrl',
         password: $scope.password
       };
 
-      Auth.signup(formData, successAuth, function() {
+      AuthService.signup(formData, successAuth, function() {
         $rootScope.error = 'Failed to signup';
       });
     };
 
     $scope.logout = function() {
-      Auth.logout(function() {
+      AuthService.logout(function() {
         console.log('logging out');
         window.location = "#/splash";
       });
     };
-    $scope.token = $localStorage.token;
-    $scope.tokenClaims = Auth.getTokenClaims();
+    
+    $scope.$watch(function() {
+      return $localStorage.token;
+    }, function(newVal, oldVal) {
+      console.log('token changed');
+      console.log(newVal);
+      $scope.authUser = AuthService.getTokenClaims();
+      $scope.token = newVal;
+    });
   }]);
