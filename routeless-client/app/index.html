@@ -20,6 +20,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
   <script src="bower_components/leaflet-plugins/layer/tile/Google.js"></script>
   <script src="js/angular-leaflet-directive.js"></script>
+  <script src="js/ngStorage.js"></script>
   
   
   <script src="js/app.js"></script>
@@ -33,12 +34,14 @@
   <script src="js/directives.js"></script>
   <script src="js/services/MainService.js"></script>
   <script src="js/services/CourseService.js"></script>
-  <script src="js/services/AuthService.js"></script>
+  <script src="js/services/UserService.js"></script>
+  <!--<script src="js/services/AuthService.js"></script>-->
+  <script src="js/services/AuthService2.js"></script>
   
   <!-- Select the appropriate configuration -->
   
-  <script src="js/configs/localDev.js"></script>
-  <!--<script src="js/configs/serverDev.js"></script>-->
+  <!--<script src="js/configs/localDev.js"></script>-->
+  <script src="js/configs/serverDev.js"></script>
   
 </head>
 <body>
@@ -57,7 +60,16 @@
         <ul class="nav pull-right">
           <li ng-class="{active: false}"><a href="#/users/{{currentUser.id}}">{{currentUser.username}}</a></li>
           <li ng-class="{active: routeIs('/help')}"><a href="#/help">Help</a></li>
+          
+          
+           <li data-ng-show="token"><a ng-href="#/restricted">Restricted area</a></li>
+           <li data-ng-hide="token"><a ng-click="signin()">Sign in</a></li>
+           <li data-ng-hide="token"><a ng-click="signup()">Sign up</a></li>
+           <li data-ng-show="token"><a ng-click="logout()">Logout</a></li>
+           <li><p>{{tokenClaims}}</p></li>
         </ul>
+          
+    
       </div>
     </div>
   </div>

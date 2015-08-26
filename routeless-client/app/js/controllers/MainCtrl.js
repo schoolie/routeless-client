@@ -32,6 +32,11 @@ routelessControllers.controller('UserDetailCtrl', ['$scope', '$routeParams', 'Us
     $scope.user = User.query({id: $routeParams.id});
   }]);
 
+routelessControllers.controller('SplashCtrl', ['$scope', '$routeParams', 'User',
+  function($scope, $routeParams, User) {
+//    $scope.user = User.query({id: $routeParams.id});
+  }]);
+
 routelessControllers.controller('UserCreateCtrl', ['$scope', 'User',
   function($scope, User) {
     $scope.user = new User({username:'schoolie', email:'brian.p.schoolcraft@gmail.com'});

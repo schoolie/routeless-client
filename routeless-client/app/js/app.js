@@ -4,6 +4,7 @@
 
 var routeless = angular.module('routeless', [
   'ngRoute',
+  'ngStorage',
   'routelessAnimations',
   'routelessControllers',
   'routelessFilters',
@@ -15,6 +16,10 @@ var routeless = angular.module('routeless', [
 routeless.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
+      when('/splash', {
+        templateUrl: 'partials/splash.html',
+        controller: 'SplashCtrl'
+      }).
       when('/courses', {
         templateUrl: 'partials/course-list.html',
         controller: 'CourseListCtrl'
