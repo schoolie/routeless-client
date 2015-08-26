@@ -1,29 +1,53 @@
-/* Resource that Handles user authentication */
+routelessServices.factory('AuthService', 
+  ['$http', 
+    '$localStorage',
+    function ($http, $localStorage) {
+       function urlBase64Decode(str) {
+           var output = str.replace('-', '+').replace('_', '/');
+           switch (output.length % 4) {
+               case 0:
+                   break;
+               case 2:
+                   output += '==';
+                   break;
+               case 3:
+                   output += '=';
+                   break;
+               default:
+                   throw 'Illegal base64url string!';
+           }
+           return window.atob(output);
+       }
 
+       function getClaimsFromToken() {
+           var token = $localStorage.token;
+           var user = {};
+           if (typeof token !== 'undefined') {
+//               var encoded = token.split('.')[1];
+//               user = JSON.parse(urlBase64Decode(encoded));
+               user = token.user;
+           }
+           return user;
+       }
 
-routelessServices.factory('AuthService', [ function() {
-  var authObj = {};
-  var currentUser;
-  
-  authObj = {
-    login: function(user) {
-      currentUser = user;
-    },
-    logout: function() {
-      currentUser = null;
-    },
-    isLoggedIn: function() {
-      if (currentUser) {
-        return true;
-      }
-      else {
-        return false;
-      }
-    },
-    currentUser: function() { 
-      return currentUser; 
-    }
-  };
-  
-  return authObj;
-}]);
+       var tokenClaims = getClaimsFromToken();
+
+       return {
+           signup: function (data, success, error) {
+//               $http.post(urls.BASE + '/signup', data).success(success).error(error)
+               success({token: {user:'schoolie'}});
+           },
+           signin: function (data, success, error) {
+//               $http.post(urls.BASE + '/signin', data).success(success).error(error)
+               success({token: {user:'schoolie'}});
+           },
+           logout: function (success) {
+               tokenClaims = {};
+               delete $localStorage.token;
+               success();
+           },
+           getTokenClaims: function () {
+               return tokenClaims;
+           }
+       };
+   }]);
