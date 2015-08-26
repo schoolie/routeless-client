@@ -5,8 +5,7 @@ routelessControllers.controller('LoginCtrl',
   'AuthService',
   function LoginController($scope, $localStorage, AuthService) {
     $scope.user = {
-      username:"schoolie",
-      password:'temp'
+      id: 1
     };
 
     function successAuth(res) {

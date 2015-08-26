@@ -38,9 +38,7 @@ routelessControllers.controller('NavbarCtrl',
     $scope.$watch(function() {
       return $localStorage.token;
     }, function(newVal, oldVal) {
-      console.log('token changed');
-      console.log(newVal);
-      $scope.authUser = AuthService.getTokenClaims();
+      $scope.authUser = AuthService.getAuthUser();
       $scope.token = newVal;
     });
   }]);

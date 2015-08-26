@@ -1,7 +1,8 @@
 routelessServices.factory('AuthService', 
   ['$http', 
     '$localStorage',
-    function ($http, $localStorage) {
+    'User',
+    function ($http, $localStorage, User) {
        function urlBase64Decode(str) {
            var output = str.replace('-', '+').replace('_', '/');
            switch (output.length % 4) {
@@ -27,6 +28,7 @@ routelessServices.factory('AuthService',
 //               user = JSON.parse(urlBase64Decode(encoded));
                user = token.user;
            }
+           console.log(user)
            return user;
        }
 
@@ -40,9 +42,11 @@ routelessServices.factory('AuthService',
            signin: function (data, success, error) {
 //               $http.post(urls.BASE + '/signin', data).success(success).error(error)
                console.log(data);
-               res = {token: {user: data.user}};
-               $localStorage.token = res.token;
-               success(res);
+               user = User.query({id: data.user.id}, function(res) {
+                  $localStorage.token = {user: res};
+                  console.log($localStorage.token)
+                  success(res);
+               });
            },
            logout: function (success) {
                tokenClaims = {};
@@ -51,6 +55,12 @@ routelessServices.factory('AuthService',
            },
            getTokenClaims: function () {
                return getClaimsFromToken();
-           }
+           },
+           
+           getAuthUser: function () {
+              user = getClaimsFromToken();
+              authUser = User.query({id: user.id});
+              return authUser;
+            }
        };
    }]);
