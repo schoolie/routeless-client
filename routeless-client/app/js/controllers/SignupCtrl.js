@@ -1,10 +1,10 @@
-
+  
 routelessControllers.controller('SignupCtrl',
 ['$scope',
   '$localStorage',
-  '$rootScope',
+  'User',
   'AuthService',
-  function SignupController($scope, $rootScope, $localStorage, AuthService) {
+  function SignupController($scope, $localStorage, User, AuthService) {
     $scope.user = {
       id: 1
     };
@@ -12,18 +12,20 @@ routelessControllers.controller('SignupCtrl',
     $scope.$storage = $localStorage;
     
     function successAuth(res) {
-      $localStorage.token = res.token;
+      $scope.$storage.token = res.token;
       window.location = "#/courses";
     }
     
     $scope.signup = function() {
-      var formData = {
+      console.log('signup');
+      delete $scope.$storage.token;
+      user = new User({
         username: $scope.user.username,
         password: $scope.user.password
-      };
-
-      AuthService.signup(formData, successAuth, function() {
-        $scope.error = 'Invalid credentials.';
       });
+      user.$save().then(function(response) {
+        console.log(response);
+      });
+      window.location = "#/login";
     };
   }]);

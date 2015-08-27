@@ -30,6 +30,7 @@
   <script src="js/controllers/UserListCtrl.js"></script>
   <script src="js/controllers/NavbarCtrl.js"></script>
   <script src="js/controllers/LoginCtrl.js"></script>
+  <script src="js/controllers/SignupCtrl.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
   <script src="js/services/MainService.js"></script>
@@ -63,7 +64,7 @@
           
            <li data-ng-show="$storage.token"><a ng-href="#/restricted">Restricted area</a></li>
            <li data-ng-hide="$storage.token" ng-class="{active: routeIs('/login')}"><a ng-href="#/login">Log in</a></li>
-           <li data-ng-hide="$storage.token"><a ng-click="signup()">Sign up</a></li>
+           <li data-ng-hide="$storage.token" ng-class="{active: routeIs('/signup')}"><a ng-href="#/signup">Sign up</a></li>
            <li data-ng-show="$storage.token"><a ng-click="logout()">Logout</a></li>
            <li><p>{{authUser.username}}</p></li>
         </ul>

@@ -9,8 +9,6 @@ routelessControllers.controller('LoginCtrl',
     };
     
     $scope.$storage = $localStorage;
-    console.log($scope);
-    console.log($localStorage);
     
     function successAuth(res) {
       $scope.$storage.token = res.token;
@@ -24,7 +22,7 @@ routelessControllers.controller('LoginCtrl',
       };
 
       AuthService.login(formData, successAuth, function() {
-        $scope.error = 'Invalid credentials test.';
+        $scope.error = 'Invalid credentials.';
       });
     };
   }]);

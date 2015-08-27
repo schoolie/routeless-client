@@ -24,6 +24,10 @@ routeless.config(['$routeProvider',
         templateUrl: 'partials/login.html',
         controller: 'LoginCtrl'
       }).
+      when('/signup', {
+        templateUrl: 'partials/signup.html',
+        controller: 'SignupCtrl'
+      }).
       when('/courses', {
         templateUrl: 'partials/course-list.html',
         controller: 'CourseListCtrl'

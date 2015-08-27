@@ -23,6 +23,7 @@ routelessServices.factory('AuthService',
 
        function getClaimsFromToken() {
            var token = $localStorage.token;
+           
            var user = {};
            if (typeof token !== 'undefined') {
                var encoded = token.split('.')[1];
@@ -34,17 +35,8 @@ routelessServices.factory('AuthService',
        var tokenClaims = getClaimsFromToken();
 
        return {
-           signup: function (data, success, error) {
-               $http.post(rlConfig.backend + 'auth', data).success(function(res) {
-                 console.log('success');
-                 console.log(res);
-                 success(res);
-               }).error(error);
-           },
            login: function (data, success, error) {
                $http.post(rlConfig.backend + 'auth', data).success(function(res) {
-                 console.log('success');
-                 console.log(res);
                  success(res);
                }).error(error);
            },
