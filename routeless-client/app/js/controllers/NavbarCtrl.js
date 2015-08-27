@@ -20,4 +20,10 @@ routelessControllers.controller('NavbarCtrl',
         window.location = "#/splash";
       });
     };
+    
+    $scope.$watch(function() {
+      return $scope.$storage.token;
+    }, function(newVal, oldVal) {
+      $scope.authUser = AuthService.getAuthUser();
+    });
   }]);
