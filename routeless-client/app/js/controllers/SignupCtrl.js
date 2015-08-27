@@ -11,11 +11,6 @@ routelessControllers.controller('SignupCtrl',
 
     $scope.$storage = $localStorage;
     
-    function successAuth(res) {
-      $scope.$storage.token = res.token;
-      window.location = "#/courses";
-    }
-    
     $scope.signup = function() {
       console.log('signup');
       delete $scope.$storage.token;
@@ -25,7 +20,7 @@ routelessControllers.controller('SignupCtrl',
       });
       user.$save().then(function(response) {
         console.log(response);
+        window.location = "#/login";
       });
-      window.location = "#/login";
     };
   }]);
