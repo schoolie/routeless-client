@@ -16,7 +16,6 @@ routelessControllers.controller('NavbarCtrl',
 
     $scope.logout = function() {
       AuthService.logout(function() {
-        console.log('logging out');
         window.location = "#/splash";
       });
     };

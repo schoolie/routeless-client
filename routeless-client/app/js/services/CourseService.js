@@ -7,6 +7,9 @@ routelessServices.factory('Course', ['$resource', 'rlConfig',
         query: {
           method:'GET',
           isArray:false,
+          params: {
+            q: '@q'
+          },
           transformResponse: function(data) {
             data = JSON.parse(data);
             data.center = {

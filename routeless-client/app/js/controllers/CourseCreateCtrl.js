@@ -3,9 +3,9 @@ routelessControllers.controller('CourseCreateCtrl',
    '$routeParams', 
    '$location', 
    'Course', 
-   'AuthService',
-  function($scope, $routeParams, $location, Course, AuthService) {
-    $scope.authUser = AuthService.getAuthUser();
+   'TokenService',
+  function($scope, $routeParams, $location, Course, TokenService) {
+    $scope.authUser = TokenService.getAuthUser();
     $scope.course = new Course({
       creator_id: $scope.authUser.username, 
       lat: 40, 

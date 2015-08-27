@@ -39,7 +39,6 @@ routelessServices.factory('TokenService',
           clearToken: function() {
               tokenClaims = {};
               delete $localStorage.token;
-              console.log($localStorage.token);
           },
           getAuthUser: function () {
               return getClaimsFromToken();

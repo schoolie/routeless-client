@@ -36,6 +36,10 @@ routeless.config(['$routeProvider',
         templateUrl: 'partials/course-detail.html',
         controller: 'CourseDetailCtrl'
       }).
+      when('/mycourses', {
+        templateUrl: 'partials/course-list.html',
+        controller: 'MyCourseListCtrl'
+      }).
       when('/new_course', {
         templateUrl: 'partials/course-create.html',
         controller: 'CourseCreateCtrl'
@@ -43,10 +47,6 @@ routeless.config(['$routeProvider',
       when('/users', {
         templateUrl: 'partials/user-list.html',
         controller: 'UserListCtrl'
-      }).
-      when('/new_user', {
-        templateUrl: 'partials/user-create.html',
-        controller: 'UserCreateCtrl'
       }).
       when('/users/:id', {
         templateUrl: 'partials/user-detail.html',

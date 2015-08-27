@@ -15,14 +15,6 @@ routelessServices.factory('User', ['$resource', 'TokenService', 'rlConfig',
               }
             }
           }
-        }
-//        save: {
-//          method:'POST',   
-//          transformRequest: function(req) {
-//            console.log(req);
-//            return JSON.stringify(req);
-//          }
-//        }
-        
+        }        
     });
   }]);
