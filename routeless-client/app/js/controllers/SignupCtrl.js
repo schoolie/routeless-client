@@ -10,17 +10,16 @@ routelessControllers.controller('SignupCtrl',
     };
 
     $scope.$storage = $localStorage;
+
+    function successAuth(res) {
+      window.location = "#/login";
+    }
     
     $scope.signup = function() {
-      console.log('signup');
-      delete $scope.$storage.token;
-      user = new User({
-        username: $scope.user.username,
-        password: $scope.user.password
-      });
-      user.$save().then(function(response) {
-        console.log(response);
-        window.location = "#/login";
+      var formData = $scope.user
+      
+      AuthService.signup(formData, successAuth, function() {
+        $scope.error = 'Invalid credentials.';
       });
     };
   }]);

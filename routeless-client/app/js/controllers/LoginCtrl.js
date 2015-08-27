@@ -11,7 +11,6 @@ routelessControllers.controller('LoginCtrl',
     $scope.$storage = $localStorage;
     
     function successAuth(res) {
-      $scope.$storage.token = res.token;
       window.location = "#/courses";
     }
     

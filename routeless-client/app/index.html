@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
   
+  <link rel="icon" type="image/png" href="#/icon/favicon.png" sizes="16x16">
+
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -50,9 +52,9 @@
 
     <div class="navbar">
       <div class="navbar-inner">
-        <a class="brand" href="#/">Routeless</a>
+        <a class="brand" href="#/splash">Routeless</a>
         <ul class="nav">
-          <li ng-class="{active: routeIs('/')}"><a href="#/">Home</a></li>
+          <li ng-class="{active: routeIs('/splash')}"><a href="#/splash">Home</a></li>
           <li ng-class="{active: routeIs('/courses')}"><a href="#/courses">Courses</a></li>
           <li ng-class="{active: routeIs('/users')}"><a href="#/users">Users</a></li>
         </ul>
@@ -66,7 +68,7 @@
            <li data-ng-hide="$storage.token" ng-class="{active: routeIs('/login')}"><a ng-href="#/login">Log in</a></li>
            <li data-ng-hide="$storage.token" ng-class="{active: routeIs('/signup')}"><a ng-href="#/signup">Sign up</a></li>
            <li data-ng-show="$storage.token"><a ng-click="logout()">Logout</a></li>
-           <li><p>{{authUser.username}}</p></li>
+           <li><a href="#/users/{{authUser.id}}">{{authUser.username}}</a></li>
         </ul>
           
     

@@ -23,7 +23,6 @@ routelessServices.factory('AuthService',
 
        function getClaimsFromToken() {
            var token = $localStorage.token;
-           
            var user = {};
            if (typeof token !== 'undefined') {
                var encoded = token.split('.')[1];
@@ -35,27 +34,29 @@ routelessServices.factory('AuthService',
        var tokenClaims = getClaimsFromToken();
 
        return {
-           login: function (data, success, error) {
-               $http.post(rlConfig.backend + 'auth', data).success(function(res) {
-                 success(res);
-               }).error(error);
-           },
-           logout: function (success) {
-               tokenClaims = {};
-               delete $localStorage.token;
-               success();
-           },
-           getTokenClaims: function () {
-               return getClaimsFromToken();
-           },
-           
-           getAuthUser: function () {
-              user = getClaimsFromToken();
-//              authUser = User.query({id: user.id});
-//              return authUser;
-              console.log('getAuthUser');
-              console.log(user);
-              return user;
-            }
+          signup: function(data, success, error) {
+            console.log('signup');
+            
+            user = new User({
+              username: data.username,
+              email: data.email,
+              password: data.password
+            });
+            user.$save().then(success, error);
+          },
+          login: function (data, success, error) {
+              $http.post(rlConfig.backend + 'auth', data).success(function(res) {
+                $localStorage.token = res.token;
+                success(res);
+              }).error(error);
+          },
+          logout: function (success) {
+              tokenClaims = {};
+              delete $localStorage.token;
+              success();
+          },
+          getAuthUser: function () {
+             return getClaimsFromToken();
+           }
        };
    }]);
