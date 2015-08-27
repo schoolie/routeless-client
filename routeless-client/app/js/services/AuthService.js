@@ -2,7 +2,8 @@ routelessServices.factory('AuthService',
   ['$http', 
     '$localStorage',
     'User',
-    function ($http, $localStorage, User) {
+    'rlConfig',
+    function ($http, $localStorage, User, rlConfig) {
        function urlBase64Decode(str) {
            var output = str.replace('-', '+').replace('_', '/');
            switch (output.length % 4) {
@@ -24,11 +25,9 @@ routelessServices.factory('AuthService',
            var token = $localStorage.token;
            var user = {};
            if (typeof token !== 'undefined') {
-//               var encoded = token.split('.')[1];
-//               user = JSON.parse(urlBase64Decode(encoded));
-               user = token.user;
+               var encoded = token.split('.')[1];
+               user = JSON.parse(urlBase64Decode(encoded));
            }
-           console.log(user)
            return user;
        }
 
@@ -36,17 +35,18 @@ routelessServices.factory('AuthService',
 
        return {
            signup: function (data, success, error) {
-//               $http.post(urls.BASE + '/signup', data).success(success).error(error)
-               success({token: {user:'schoolie'}});
+               $http.post(rlConfig.backend + 'auth', data).success(function(res) {
+                 console.log('success');
+                 console.log(res);
+                 success(res);
+               }).error(error);
            },
-           signin: function (data, success, error) {
-//               $http.post(urls.BASE + '/signin', data).success(success).error(error)
-               console.log(data);
-               user = User.query({id: data.user.id}, function(res) {
-                  $localStorage.token = {user: res};
-                  console.log($localStorage.token)
-                  success(res);
-               });
+           login: function (data, success, error) {
+               $http.post(rlConfig.backend + 'auth', data).success(function(res) {
+                 console.log('success');
+                 console.log(res);
+                 success(res);
+               }).error(error);
            },
            logout: function (success) {
                tokenClaims = {};
@@ -59,8 +59,11 @@ routelessServices.factory('AuthService',
            
            getAuthUser: function () {
               user = getClaimsFromToken();
-              authUser = User.query({id: user.id});
-              return authUser;
+//              authUser = User.query({id: user.id});
+//              return authUser;
+              console.log('getAuthUser');
+              console.log(user);
+              return user;
             }
        };
    }]);

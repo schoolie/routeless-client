@@ -7,25 +7,11 @@ routelessControllers.controller('NavbarCtrl',
   'AuthService',
   function NavbarController($scope, $location, $localStorage, AuthService) {
 
+    $scope.$storage = $localStorage;
+    console.log($scope.$storage.token);
+    
     $scope.routeIs = function(routeName) {
       return $location.path() === routeName;
-    };
-
-
-    function successAuth(res) {
-      $localStorage.token = res.token;
-      window.location = "#/courses";
-    }
-
-    $scope.signup = function() {
-      var formData = {
-        email: $scope.email,
-        password: $scope.password
-      };
-
-      AuthService.signup(formData, successAuth, function() {
-        $rootScope.error = 'Failed to signup';
-      });
     };
 
     $scope.logout = function() {
@@ -34,11 +20,4 @@ routelessControllers.controller('NavbarCtrl',
         window.location = "#/splash";
       });
     };
-    
-    $scope.$watch(function() {
-      return $localStorage.token;
-    }, function(newVal, oldVal) {
-      $scope.authUser = AuthService.getAuthUser();
-      $scope.token = newVal;
-    });
   }]);

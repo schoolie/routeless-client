@@ -20,8 +20,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
   <script src="bower_components/leaflet-plugins/layer/tile/Google.js"></script>
   <script src="js/angular-leaflet-directive.js"></script>
-  <script src="js/ngStorage.js"></script>
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>  
   
   <script src="js/app.js"></script>
   <script src="js/animations.js"></script>
@@ -40,8 +39,8 @@
   
   <!-- Select the appropriate configuration -->
   
-  <!--<script src="js/configs/localDev.js"></script>-->
-  <script src="js/configs/serverDev.js"></script>
+  <script src="js/configs/localDev.js"></script>
+  <!--<script src="js/configs/serverDev.js"></script>-->
   
 </head>
 <body ng-controller="NavbarCtrl">
@@ -62,11 +61,11 @@
           <li ng-class="{active: routeIs('/help')}"><a href="#/help">Help</a></li>
           
           
-           <li data-ng-show="token"><a ng-href="#/restricted">Restricted area</a></li>
-           <li data-ng-hide="token" ng-class="{active: routeIs('/login')}"><a ng-href="#/login">Log in</a></li>
-           <li data-ng-hide="token"><a ng-click="signup()">Sign up</a></li>
-           <li data-ng-show="token"><a ng-click="logout()">Logout</a></li>
-           <li><p>{{token}}</p><p>{{authUser.username}}</p></li>
+           <li data-ng-show="$storage.token"><a ng-href="#/restricted">Restricted area</a></li>
+           <li data-ng-hide="$storage.token" ng-class="{active: routeIs('/login')}"><a ng-href="#/login">Log in</a></li>
+           <li data-ng-hide="$storage.token"><a ng-click="signup()">Sign up</a></li>
+           <li data-ng-show="$storage.token"><a ng-click="logout()">Logout</a></li>
+           <li><p>{{authUser.username}}</p></li>
         </ul>
           
     
