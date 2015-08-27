@@ -1,6 +1,6 @@
 
-routelessControllers.controller('UserListCtrl', ['$scope', 'User', 'AuthService',
-  function($scope, User, AuthService) {
+routelessControllers.controller('UserListCtrl', ['$scope', '$localStorage', 'User', 'AuthService',
+  function($scope, $localStorage, User, AuthService) {
     $scope.users = User.query();
     $scope.orderProp = 'id'; 
     

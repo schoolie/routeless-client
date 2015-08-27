@@ -5,7 +5,8 @@ routelessControllers.controller('NavbarCtrl',
   '$location',
   '$localStorage',
   'AuthService',
-  function NavbarController($scope, $location, $localStorage, AuthService) {
+  'TokenService',
+  function NavbarController($scope, $location, $localStorage, AuthService, TokenService) {
 
     $scope.$storage = $localStorage;
     
@@ -23,6 +24,6 @@ routelessControllers.controller('NavbarCtrl',
     $scope.$watch(function() {
       return $scope.$storage.token;
     }, function(newVal, oldVal) {
-      $scope.authUser = AuthService.getAuthUser();
+      $scope.authUser = TokenService.getAuthUser();
     });
   }]);
