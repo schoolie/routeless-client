@@ -44,7 +44,6 @@ routelessServices.factory('TokenService',
               return getClaimsFromToken();
           },
           getToken: function() {
-              console.log($localStorage.token);
               var token = $localStorage.token;
               return token;
           }
