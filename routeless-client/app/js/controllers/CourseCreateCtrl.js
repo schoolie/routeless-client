@@ -13,4 +13,10 @@ routelessControllers.controller('CourseCreateCtrl',
       zoom:10, 
       map_layer:'roadmap'
     });
+    
+    $scope.submit = function() {
+      $scope.course.$save(function() {
+        window.location = "#/courses";
+      });
+    };
   }]);
