@@ -11,7 +11,7 @@ routelessControllers.controller('CourseDetailCtrl',
    'leafletData',
   function($scope, $routeParams, $window, Course, CheckPoint, leafletData) {
     $scope.course = Course.query({id: $routeParams.id});
-    
+    console.log($scope);
     angular.extend($scope, {events: {},
       layers: {
         baselayers: {
@@ -61,28 +61,6 @@ routelessControllers.controller('CourseDetailCtrl',
       $scope.course.map_layer = args.leafletEvent.name;
     });
     
-//    $scope.$watch("course.map_layer", function(new_layer, old_layer) {
-//      $scope.changeBaseLayer(new_layer);
-//    });
-//    
-//    $scope.changeBaseLayer = function (new_layer) {
-//        leafletData.getMap().then(function (map) {
-//            leafletData.getLayers().then(function (layers) {
-//              for (var layer in layers.baselayers) {  
-//                if (layers.baselayers.hasOwnProperty(layer)) {
-//                  console.log('rem');
-//                  console.log(layer);
-//                  debugger;
-//                  map.removeLayer(layer);
-//                }
-//              }      
-//              console.log('new layer');
-//              console.log(new_layer);
-//              map.addLayer(layers.baselayers[new_layer]);
-//            });
-//        });
-//    };
-    
     $scope.add_check_point = function() {
       $scope.course.check_points.push({
         lat: $scope.course.lat,
@@ -104,13 +82,11 @@ routelessControllers.controller('CourseDetailCtrl',
             title: cp.title,
             description: cp.description
           });
-          check_point.$save();
+          check_point.$save(); //Save to Server
         }
       });
       $scope.course.$update(function(){
         //sends PUT request to backend, saving course and checkpoints
-      }).then(function() {
-//        $window.location.reload(); //Refresh page to get transient data rebuilt
       });   
     };
     
@@ -120,8 +96,6 @@ routelessControllers.controller('CourseDetailCtrl',
       if(i !== -1) {
         $scope.course.check_points.splice(i, 1);
       }
-//      var check_point = new CheckPoint(cp);
-//      check_point.$delete(function(){});
     };
 
   }]);

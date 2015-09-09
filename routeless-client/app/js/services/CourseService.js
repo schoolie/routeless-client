@@ -1,12 +1,13 @@
 /* Resource that Processes Loads/Saves Course Objects */
 
 
-routelessServices.factory('Course', ['$resource', 'rlConfig',
-  function($resource, rlConfig){
+routelessServices.factory('Course', ['$resource', 'TokenService', 'rlConfig',
+  function($resource, TokenService, rlConfig){
     return $resource(rlConfig.backend+'api_1_0/courses/:id', {id:'@id'}, {
         query: {
           method:'GET',
           isArray:false,
+          headers: TokenService.authHeaders,
           params: {
             q: '@q'
           },
@@ -37,6 +38,7 @@ routelessServices.factory('Course', ['$resource', 'rlConfig',
         },
         update: {
           method: 'PUT',
+          headers: TokenService.authHeaders,
           transformRequest: function(data) {
             var proc_data = data;
             delete proc_data.autoDiscover;
