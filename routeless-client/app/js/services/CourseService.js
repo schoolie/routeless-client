@@ -4,6 +4,10 @@
 routelessServices.factory('Course', ['$resource', 'TokenService', 'rlConfig',
   function($resource, TokenService, rlConfig){
     return $resource(rlConfig.backend+'api_1_0/courses/:id', {id:'@id'}, {
+        save: {
+          method: 'POST',
+          headers: TokenService.authHeaders
+        },
         query: {
           method:'GET',
           isArray:false,
