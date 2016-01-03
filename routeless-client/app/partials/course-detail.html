@@ -20,6 +20,8 @@
         <th>Lon</th>
         <th>Title</th>
         <th>Description</th>
+        <th>Near Distance</th>
+        <th>Far Distance</th>
         <th></th>
       </tr>
       <tr ng-repeat="cp in course.check_points">
@@ -27,6 +29,8 @@
         <td>{{cp.lng | number}}</td>
         <td><input ng-model="cp.title"></td>
         <td><input ng-model="cp.message"></td>
+        <td><input ng-model="cp.near_distance"></td>
+        <td><input ng-model="cp.found_distance"></td>
         <td><button ng-click="deleteCP(cp)">Delete</button></td>
       </tr>
     </table>

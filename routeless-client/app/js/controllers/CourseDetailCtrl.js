@@ -82,6 +82,7 @@ routelessControllers.controller('CourseDetailCtrl',
             title: cp.title,
             description: cp.description
           });
+          console.log(check_point);
           check_point.$save(); //Save to Server
         }
       });
