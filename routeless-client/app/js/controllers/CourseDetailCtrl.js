@@ -80,7 +80,9 @@ routelessControllers.controller('CourseDetailCtrl',
             lat: cp.lat,
             lng: cp.lng,
             title: cp.title,
-            description: cp.description
+            description: cp.description,
+            near_distance: cp.near_distance,
+            found_distance: cp.found_distance
           });
           console.log(check_point);
           check_point.$save(); //Save to Server
